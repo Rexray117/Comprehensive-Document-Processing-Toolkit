@@ -1,0 +1,341 @@
+{
+  "name": "综合性办公文件处理技能",
+  "slug": "omni-office-file-toolkit",
+  "version": "0.2.0",
+  "release": "v0.2",
+  "release_date": "2026-10-12",
+  "skill_standard": "agent-skills",
+  "license": "Apache-2.0",
+  "summary": "统一处理 PPTX、DOCX、XLSX、HTML、PDF、TXT 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改",
+  "min_python": "3.9",
+  "built_with_python": "3.13.14",
+  "entrypoints": {
+    "skill_md": "SKILL.md",
+    "mcp_server": {
+      "command": "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe",
+      "args": [
+        "bridges/mcp_server.py"
+      ],
+      "granular_args": [
+        "bridges/mcp_server.py",
+        "--granular"
+      ],
+      "protocol": "mcp-stdio",
+      "protocol_versions": [
+        "2025-06-18",
+        "2025-03-26",
+        "2024-11-05"
+      ],
+      "note": "command 必须是安装了依赖的 Python 绝对路径；换机器部署时需替换。"
+    },
+    "stdio_bridge": {
+      "command": "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe",
+      "args": [
+        "bridges/stdio_bridge.py"
+      ],
+      "protocol": "line-delimited-json",
+      "note": "stdin 每行一个请求，stdout 每行一个响应；支持 --once 单次模式。"
+    },
+    "python_api": {
+      "import": "core.dispatcher",
+      "callable": "run",
+      "batch": "run_batch"
+    },
+    "cli": {
+      "command": "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe",
+      "args": [
+        "-m",
+        "core.cli"
+      ],
+      "cwd": "."
+    },
+    "tools_spec": "bridges/tool_specs.json",
+    "openai_tools": "harness/openai_tools.generic.json",
+    "langchain_tools": "harness/langchain_tools.generic.json"
+  },
+  "tools": {
+    "generic_count": 4,
+    "granular_count": 34,
+    "generic_names": [
+      "file_dispatch",
+      "file_capabilities",
+      "file_doctor",
+      "file_batch"
+    ],
+    "granular_names": [
+      "file_docx_analyze",
+      "file_docx_edit",
+      "file_docx_probe",
+      "file_docx_read",
+      "file_docx_transform",
+      "file_html_analyze",
+      "file_html_edit",
+      "file_html_probe",
+      "file_html_read",
+      "file_html_transform",
+      "file_image_analyze",
+      "file_image_edit",
+      "file_image_probe",
+      "file_image_read",
+      "file_image_transform",
+      "file_pdf_analyze",
+      "file_pdf_probe",
+      "file_pdf_read",
+      "file_pdf_transform",
+      "file_pptx_analyze",
+      "file_pptx_edit",
+      "file_pptx_probe",
+      "file_pptx_read",
+      "file_pptx_transform",
+      "file_txt_analyze",
+      "file_txt_edit",
+      "file_txt_probe",
+      "file_txt_read",
+      "file_txt_transform",
+      "file_xlsx_analyze",
+      "file_xlsx_edit",
+      "file_xlsx_probe",
+      "file_xlsx_read",
+      "file_xlsx_transform"
+    ],
+    "modules": [
+      "docx",
+      "html",
+      "image",
+      "pdf",
+      "pptx",
+      "txt",
+      "xlsx"
+    ]
+  },
+  "modules": [
+    {
+      "module": "docx",
+      "display_name": "DOCX 文档",
+      "description": "处理 .docx 文档：按真实正文顺序读取段落/表格/图片/页眉页脚，导出 OMML 公式原始 XML，转 Markdown、跨 run 查找替换、插入表格与可编辑公式、批量清理空段。",
+      "extensions": [
+        ".docx",
+        ".dotx"
+      ],
+      "kinds": [
+        "docx"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform",
+        "edit"
+      ],
+      "action_count": 5
+    },
+    {
+      "module": "html",
+      "display_name": "HTML 网页",
+      "description": "处理 .html 网页：提取正文/标题层级/链接/图片/表格/结构化数据，做 SEO 与无障碍审查，转 Markdown/纯文本，把外链资源内联为单文件自包含 HTML，并支持选择器级增删改。",
+      "extensions": [
+        ".html",
+        ".htm",
+        ".xhtml"
+      ],
+      "kinds": [
+        "html",
+        "htm"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform",
+        "edit"
+      ],
+      "action_count": 5
+    },
+    {
+      "module": "image",
+      "display_name": "图片（PNG/JPG 等）",
+      "description": "处理位图图片：读取元数据与 EXIF、OCR 识别图中文字、评估清晰度与配色、启发式判别图片类型并生成多模态视觉分析载荷，支持转换/压缩/裁剪/加水印/打码。",
+      "extensions": [
+        ".png",
+        ".jpg",
+        ".jpeg",
+        ".gif",
+        ".bmp",
+        ".webp",
+        ".tif",
+        ".tiff"
+      ],
+      "kinds": [
+        "png",
+        "jpg",
+        "jpeg",
+        "gif",
+        "bmp",
+        "webp",
+        "tiff"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform",
+        "edit"
+      ],
+      "action_count": 5
+    },
+    {
+      "module": "pdf",
+      "display_name": "PDF 文档",
+      "description": "读取 .pdf：元数据与加密探测、按页文本提取（支持页码区间）、书签大纲、关键词与空页诊断，导出文本/Markdown/JSON、按页拆分。只读模块，不做写编辑。",
+      "extensions": [
+        ".pdf"
+      ],
+      "kinds": [
+        "pdf"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform"
+      ],
+      "action_count": 4
+    },
+    {
+      "module": "pptx",
+      "display_name": "PPTX 演示文稿",
+      "description": "处理 .pptx 演示文稿：读取幻灯片文本/表格/图表/备注/图片、统计大纲与关键词、导出 Markdown 或图片、跨 run 查找替换保格式、增删与复制幻灯片。",
+      "extensions": [
+        ".pptx",
+        ".ppsx",
+        ".potx"
+      ],
+      "kinds": [
+        "pptx"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform",
+        "edit"
+      ],
+      "action_count": 5
+    },
+    {
+      "module": "txt",
+      "display_name": "纯文本文件",
+      "description": "处理 .txt 纯文本：编码智能探测、行尾诊断、统计与关键词分析，转 JSON/JSONL/Markdown，支持就地查找替换、行过滤与格式清理（零第三方依赖）。",
+      "extensions": [
+        ".txt"
+      ],
+      "kinds": [
+        "txt"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform",
+        "edit"
+      ],
+      "action_count": 5
+    },
+    {
+      "module": "xlsx",
+      "display_name": "XLSX 工作表",
+      "description": "处理 .xlsx 工作簿：读取值/公式/合并单元格/数字格式，做描述统计与分组聚合，导出 CSV/JSON/Markdown/HTML，写入单元格与公式、追加行、设置格式、插入图表。",
+      "extensions": [
+        ".xlsx",
+        ".xlsm",
+        ".xltx"
+      ],
+      "kinds": [
+        "xlsx"
+      ],
+      "actions": [
+        "probe",
+        "read",
+        "analyze",
+        "transform",
+        "edit"
+      ],
+      "action_count": 5
+    }
+  ],
+  "module_count": 7,
+  "action_count": 34,
+  "dependencies": {
+    "python": "3.13.14",
+    "lock_file": "requirements.lock.txt",
+    "core": [
+      "python-pptx==1.0.2",
+      "python-docx==1.2.0",
+      "openpyxl==3.1.5",
+      "pandas==3.0.5",
+      "numpy==2.5.3",
+      "Pillow==12.3.0",
+      "beautifulsoup4==4.15.0",
+      "lxml==6.1.3",
+      "markdownify==1.2.3",
+      "html2text==2025.4.15",
+      "filetype==1.2.0",
+      "charset-normalizer==3.5.1"
+    ],
+    "ocr": [
+      "rapidocr-onnxruntime==1.2.3",
+      "onnxruntime==1.30.0"
+    ],
+    "extras": [
+      "mammoth==1.12.1",
+      "opencc-python-reimplemented==0.1.7",
+      "XlsxWriter==3.2.9",
+      "pymupdf>=1.24.0"
+    ],
+    "install": [
+      "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe -m pip install -r requirements.txt",
+      "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe -m pip install -r requirements-ocr.txt   # 可选：OCR"
+    ]
+  },
+  "mcp_resources": [
+    "SKILL.md",
+    "README.md",
+    "MANIFEST.json",
+    "bridges/INTEGRATION.md",
+    "references/api-reference.md",
+    "references/architecture.md",
+    "references/extension-guide.md"
+  ],
+  "security": {
+    "network_access": "none",
+    "file_scope": "仅调用方显式传入的路径；无隐式目录遍历",
+    "write_policy": "edit 默认就地保存并先生成 _bak 备份；transform 输出到 <文件名>_out/",
+    "destructive_delete": "无。任何动作都不删除原文件"
+  },
+  "verification": {
+    "status": "passed",
+    "checks": {
+      "doctor": {
+        "ok": true,
+        "exit": 0
+      },
+      "smoke_test": {
+        "ok": true,
+        "exit": 0,
+        "summary": "总计 46 个用例：通过 45，警告 1，失败 0"
+      },
+      "mcp_selftest_generic": {
+        "ok": true,
+        "exit": 0,
+        "summary": "通过 13 / 13"
+      },
+      "mcp_selftest_granular": {
+        "ok": true,
+        "exit": 0,
+        "summary": "通过 13 / 13"
+      }
+    },
+    "smoke_workdir": "C:\\Users\\ASUS\\AppData\\Local\\Temp\\omni_pack_verify_h0j8ryr3",
+    "failed": []
+  }
+}

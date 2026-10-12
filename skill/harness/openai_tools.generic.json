@@ -1,0 +1,158 @@
+{
+  "package": {
+    "name": "综合性办公文件处理技能",
+    "slug": "omni-office-file-toolkit",
+    "version": "0.1.0",
+    "release": "v0.1",
+    "release_date": "2026-09-11",
+    "skill_standard": "agent-skills",
+    "min_python": "3.9",
+    "summary": "统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改"
+  },
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "file_dispatch",
+        "description": "综合性办公文件处理技能：统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改。五类文件（.pptx .docx .xlsx .html .png/.jpg 等）统一走同一套动作语义，module 传 auto 时按文件真实类型自动路由。动作含义：probe=极速探测结构；read=结构化读取内容；analyze=内容识别与质量诊断（图片可开 OCR）；transform=转换导出新文件（Markdown/CSV/JSON/单文件 HTML 等）；edit=修改文件，默认就地保存并自动生成 _bak 备份。返回统一信封 {ok, module, action, warnings, artifacts, data, error}。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "analyze",
+                "edit",
+                "probe",
+                "read",
+                "transform"
+              ],
+              "description": "要执行的动作。模块特有动作也可用（见 file_capabilities）。"
+            },
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "module": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "docx",
+                "html",
+                "image",
+                "pdf",
+                "pptx",
+                "txt",
+                "xlsx"
+              ],
+              "default": "auto",
+              "description": "处理模块；auto 表示按文件类型自动识别（推荐）"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径。省略时：编辑类就地保存，导出类写入 <文件名>_out/"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "动作参数键值对，例如 {\"op\":\"to_markdown\"}、{\"op\":\"replace_text\",\"find\":\"旧\",\"replace\":\"新\"}、{\"ocr\":true,\"ocr_langs\":\"chi_sim+eng\"}。各动作的完整参数表用 file_capabilities 查询。"
+            }
+          },
+          "required": [
+            "action",
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_capabilities",
+        "description": "查询本技能支持的模块与动作契约（含每个动作的全部参数说明）。在不确定某个动作该传什么参数时先调用它，而不是猜测参数名。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "module": {
+              "type": "string",
+              "description": "模块名如 pptx/docx/xlsx/html/image；省略则返回全部模块"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_doctor",
+        "description": "环境自检：Python 版本、依赖是否齐备（缺失时直接给出 pip 安装命令）、OCR 后端是否可用、可用模块列表。遇到依赖报错时先调用它。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "verbose": {
+              "type": "boolean",
+              "description": "输出完整依赖明细（默认 false）"
+            }
+          }
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_batch",
+        "description": "对目录批量执行同一动作，例如「把 ./docs 下所有 pptx 和 docx 都体检一遍」。返回逐文件结果与汇总统计。",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "analyze",
+                "edit",
+                "probe",
+                "read",
+                "transform"
+              ]
+            },
+            "target": {
+              "type": "string",
+              "description": "目标目录（或单个文件）的绝对路径"
+            },
+            "module": {
+              "type": "string",
+              "default": "auto"
+            },
+            "output": {
+              "type": "string",
+              "description": "统一输出目录（可选）"
+            },
+            "kinds": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "按文件类型过滤，如 [\"pptx\",\"docx\"]；省略表示不过滤"
+            },
+            "recursive": {
+              "type": "boolean",
+              "default": true
+            },
+            "limit": {
+              "type": "integer",
+              "description": "最多处理 N 个文件"
+            },
+            "options": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "required": [
+            "action",
+            "target"
+          ]
+        }
+      }
+    }
+  ]
+}

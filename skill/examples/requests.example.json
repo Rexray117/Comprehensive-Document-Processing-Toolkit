@@ -1,0 +1,222 @@
+[
+  {
+    "name": "① 自动识别类型并读取（模块写 auto 即按文件真实类型路由）",
+    "module": "auto",
+    "action": "read",
+    "input": "docs/deck.pptx"
+  },
+  {
+    "name": "② 读取 DOCX：表格 + 真 OMML 公式 + 页眉页脚",
+    "module": "docx",
+    "action": "read",
+    "input": "docs/report.docx",
+    "options": {
+      "include_tables": true,
+      "include_formulas": true,
+      "include_headers": true
+    }
+  },
+  {
+    "name": "③ Word 文档体检：标题层级、空段占比、表格规模、结构问题",
+    "module": "docx",
+    "action": "analyze",
+    "input": "docs/report.docx",
+    "options": {
+      "top_n": 30,
+      "max_heading_level": 4
+    }
+  },
+  {
+    "name": "④ 跨 run 查找替换且保留原格式（output 指定则另存，不传则就地改并自动备份）",
+    "module": "docx",
+    "action": "edit",
+    "input": "docs/report.docx",
+    "output": "out/report-v2.docx",
+    "options": {
+      "op": "replace_text",
+      "find": "无人机巡检",
+      "replace": "无人机智能巡检",
+      "scope": "all"
+    }
+  },
+  {
+    "name": "⑤ 导出 DOCX 中的 OMML 公式为独立 XML（可编辑、可迁移）",
+    "module": "docx",
+    "action": "transform",
+    "input": "docs/report.docx",
+    "output": "out/",
+    "options": {
+      "op": "extract_omml"
+    }
+  },
+  {
+    "name": "⑥ PPT 转 Markdown",
+    "module": "pptx",
+    "action": "transform",
+    "input": "docs/deck.pptx",
+    "output": "out/",
+    "options": {
+      "op": "to_markdown"
+    }
+  },
+  {
+    "name": "⑦ PPT 分析：大纲 + 关键词 + 字体配色 + 空页/稀疏页诊断",
+    "module": "pptx",
+    "action": "analyze",
+    "input": "docs/deck.pptx",
+    "options": {
+      "top_n": 20
+    }
+  },
+  {
+    "name": "⑧ PPT 跨 run 替换（保格式）：把旧阈值改成新阈值",
+    "module": "pptx",
+    "action": "edit",
+    "input": "docs/deck.pptx",
+    "options": {
+      "op": "replace_text",
+      "find": "15 m/s",
+      "replace": "12 m/s",
+      "notes": true,
+      "in_place": false
+    }
+  },
+  {
+    "name": "⑨ Excel 读取值 + 公式（含「公式无缓存值」告警）",
+    "module": "xlsx",
+    "action": "read",
+    "input": "docs/book.xlsx",
+    "options": {
+      "sheet": "all",
+      "header_row": 1,
+      "max_rows": 200,
+      "mode": "both",
+      "include_formulas": true
+    }
+  },
+  {
+    "name": "⑩ Excel 分析：描述统计 + 缺失率 + 相关性 + 分组聚合 + 离群点",
+    "module": "xlsx",
+    "action": "analyze",
+    "input": "docs/book.xlsx",
+    "options": {
+      "sheet": "巡检记录",
+      "header_row": 1,
+      "by": "区域",
+      "agg": "sum,mean,count",
+      "corr": true,
+      "top_n": 5
+    }
+  },
+  {
+    "name": "⑪ Excel 写入公式（就地保存，自动生成 _bak 备份）",
+    "module": "xlsx",
+    "action": "edit",
+    "input": "docs/book.xlsx",
+    "options": {
+      "op": "set_formula",
+      "sheet": "巡检记录",
+      "cell": "H9",
+      "formula": "=COUNTIF(F2:F7,\"高\")"
+    }
+  },
+  {
+    "name": "⑫ Excel 设格式 + 自适应列宽 + 冻结窗格",
+    "module": "xlsx",
+    "action": "edit",
+    "input": "docs/book.xlsx",
+    "options": {
+      "op": "format_range",
+      "range": "A1:F1",
+      "bold": true,
+      "fill": "123C6E",
+      "color": "FFFFFF",
+      "align": "center",
+      "in_place": false
+    }
+  },
+  {
+    "name": "⑬ 图片内容识别：OCR 文字 + 版面还原 + 类型判别 + 画质指标",
+    "module": "image",
+    "action": "analyze",
+    "input": "docs/screenshot.png",
+    "options": {
+      "ocr": true,
+      "ocr_langs": "chi_sim+eng",
+      "ocr_backend": "auto",
+      "ocr_min_confidence": 0.5,
+      "vision_payload": false
+    }
+  },
+  {
+    "name": "⑭ 生成视觉桥接载荷（把 data_uri + prompt 交给多模态模型做语义识别）",
+    "module": "image",
+    "action": "analyze",
+    "input": "docs/photo.jpg",
+    "options": {
+      "ocr": true,
+      "vision_payload": true,
+      "palette_size": 8
+    }
+  },
+  {
+    "name": "⑮ 图片压缩（输出体积对比与压缩比）",
+    "module": "image",
+    "action": "transform",
+    "input": "docs/screenshot.png",
+    "output": "out/",
+    "options": {
+      "op": "compress",
+      "quality": 72
+    }
+  },
+  {
+    "name": "⑯ 图片打码（涂抹敏感区域，就地保存并自动备份）",
+    "module": "image",
+    "action": "edit",
+    "input": "docs/screenshot.png",
+    "options": {
+      "op": "redact",
+      "box": "300,150,700,300",
+      "opacity": 100
+    }
+  },
+  {
+    "name": "⑰ 网页内联成单文件自包含 HTML（CSS/JS/图片全内联）",
+    "module": "html",
+    "action": "transform",
+    "input": "site/index.html",
+    "output": "out/",
+    "options": {
+      "op": "inline_assets",
+      "embed_base64": true
+    }
+  },
+  {
+    "name": "⑱ 网页交付前审查：标题层级、图片 alt 覆盖率、外链域名、配色统计",
+    "module": "html",
+    "action": "analyze",
+    "input": "site/index.html",
+    "options": {
+      "top_n": 20,
+      "main_only": true
+    }
+  },
+  {
+    "name": "⑲ 网页净化：移除 script / 事件属性 / javascript: 链接",
+    "module": "html",
+    "action": "transform",
+    "input": "site/index.html",
+    "output": "out/",
+    "options": {
+      "op": "sanitize",
+      "keep_scripts": false
+    }
+  },
+  {
+    "name": "⑳ 目录批量体检（CLI 更顺手：python -m core.cli batch -a analyze -i ./docs --kind pptx,docx,xlsx）",
+    "module": "auto",
+    "action": "probe",
+    "input": "docs/deck.pptx"
+  }
+]

@@ -1,0 +1,26 @@
+# 由 scripts/pack_release.py 于 2026-09-11 按构建环境实际版本锁定
+# 源文件: requirements-ocr.txt
+
+# OCR 可选依赖 —— 图像文字识别（analyze 动作的 ocr=true）
+#
+# 三个后端任选其一即可，工具会按 rapidocr → tesseract → easyocr 的顺序自动选用可用者。
+# 全部不装也不会导致其它功能异常，只是图像「文字层」识别能力缺失。
+
+# ── 方案 A（强烈推荐）：RapidOCR ──────────────────────────────────────────
+# 纯 pip 安装、完全离线、CPU 推理快、中文印刷体准确率高，无需任何系统级可执行文件。
+rapidocr-onnxruntime==1.2.3
+onnxruntime==1.30.0
+
+# ── 方案 B：Tesseract ────────────────────────────────────────────────────
+# 需要先安装系统级 tesseract 可执行文件（含 chi_sim / eng 语言包），再装 Python 绑定。
+#   Windows: https://github.com/UB-Mannheim/tesseract/wiki
+#   macOS:   brew install tesseract tesseract-lang
+#   Linux:   apt install tesseract-ocr tesseract-ocr-chi-sim
+# pytesseract>=0.3.13
+
+# ── 方案 C：EasyOCR ──────────────────────────────────────────────────────
+# PyTorch 生态，模型体积大（数百 MB），中文精度略低于 RapidOCR，仅在已有 torch 环境时考虑。
+# easyocr>=1.7.1
+
+# 扫描件/低质量图片的 OCR 前处理增强（可选，装了会启用自适应二值化）
+# opencv-python-headless>=4.10.0

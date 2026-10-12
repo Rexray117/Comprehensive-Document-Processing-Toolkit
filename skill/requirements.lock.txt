@@ -1,0 +1,21 @@
+# 由 scripts/pack_release.py 于 2026-09-11 按构建环境实际版本锁定
+# 源文件: requirements.txt
+
+# omni-file-toolkit 核心依赖
+# 安装： <venv-python> -m pip install -r requirements.txt
+#
+# 说明：以下依赖均为「纯 pip 可装、无需系统级可执行文件」，覆盖五个模块的全部核心能力。
+# OCR 链路（图像文字识别）是唯一可选的额外依赖，见 requirements-ocr.txt。
+
+python-pptx==1.0.2
+python-docx==1.2.0
+openpyxl==3.1.5
+pandas==3.0.5
+numpy==2.5.3
+Pillow==12.3.0
+beautifulsoup4==4.15.0
+lxml==6.1.3
+markdownify==1.2.3
+html2text==2025.4.15
+filetype==1.2.0
+charset-normalizer==3.5.1

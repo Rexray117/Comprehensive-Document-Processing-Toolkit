@@ -1,0 +1,1509 @@
+{
+  "package": {
+    "name": "综合性办公文件处理技能",
+    "slug": "omni-office-file-toolkit",
+    "version": "0.1.0",
+    "release": "v0.1",
+    "release_date": "2026-09-11",
+    "skill_standard": "agent-skills",
+    "min_python": "3.9",
+    "summary": "统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改"
+  },
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "file_docx_probe",
+        "description": "[DOCX 文档] ZIP 层快速探测：段落/表格/图片/公式/批注的数量与文档体量",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "deep": {
+              "type": "boolean",
+              "description": "true 时用 python-docx 补充节与样式信息（默认 false）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_docx_read",
+        "description": "[DOCX 文档] 按正文真实顺序读取段落/表格/图片/公式/页眉页脚",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "include_tables": {
+              "type": "boolean",
+              "description": "是否输出表格数据（默认 true）"
+            },
+            "include_headers": {
+              "type": "boolean",
+              "description": "是否输出页眉页脚（默认 true）"
+            },
+            "include_formulas": {
+              "type": "boolean",
+              "description": "是否输出 OMML 原始 XML（默认 true）"
+            },
+            "include_images": {
+              "type": "boolean",
+              "description": "是否输出图片清单（默认 true）"
+            },
+            "include_empty": {
+              "type": "boolean",
+              "description": "是否保留空段落（默认 false）"
+            },
+            "max_formula_xml": {
+              "type": "string",
+              "description": "单个公式 XML 最大字符数（默认 4000，超出截断）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_docx_analyze",
+        "description": "[DOCX 文档] 文档分析：大纲层级、字数统计、关键词、样式分布、公式/图片、结构问题诊断",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "top_n": {
+              "type": "integer",
+              "description": "关键词数量（默认 20）"
+            },
+            "max_heading_level": {
+              "type": "string",
+              "description": "视为过深的标题层级（默认 4）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_docx_transform",
+        "description": "[DOCX 文档] 导出 Markdown / 纯文本 / 图片 / OMML 公式 / HTML / 原始 XML（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "to_markdown | to_text | export_images | extract_omml | to_html | dump_xml"
+            },
+            "formula_as": {
+              "type": "string",
+              "description": "to_markdown 时公式写法：text（默认，纯文本）或 omml（嵌入原始 XML 注释）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_docx_edit",
+        "description": "[DOCX 文档] 修改文档：查找替换（保格式）/追加段落标题/插表格/插入 OMML 公式/清理空段/写属性（会修改输入文件并自动备份）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "replace_text | add_paragraph | append_heading | insert_table | insert_formula | append_markdown | remove_empty_paragraphs | set_core_properties"
+            },
+            "find": {
+              "type": "string",
+              "description": "replace_text：查找内容"
+            },
+            "replace": {
+              "type": "string",
+              "description": "replace_text：替换内容"
+            },
+            "regex": {
+              "type": "boolean",
+              "description": "replace_text：正则模式（默认 false）"
+            },
+            "text": {
+              "type": "string",
+              "description": "add_paragraph / append_heading：文本内容"
+            },
+            "level": {
+              "type": "integer",
+              "description": "append_heading：标题层级（默认 1）"
+            },
+            "style": {
+              "type": "string",
+              "description": "add_paragraph：段落样式名"
+            },
+            "rows": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "insert_table：二维数组或 CSV 行文本"
+            },
+            "formula": {
+              "type": "string",
+              "description": "insert_formula：OMML 片段（含 <m:oMath>）"
+            },
+            "in_place": {
+              "type": "boolean",
+              "description": "是否就地保存（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_html_probe",
+        "description": "[HTML 网页] 快速概览：标题、meta、各类元素数量、内联资源占比",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_html_read",
+        "description": "[HTML 网页] 结构化读取：元信息、标题大纲、正文、链接、图片、表格、列表、结构化数据",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "include_text": {
+              "type": "boolean",
+              "description": "是否输出正文纯文本（默认 true）"
+            },
+            "main_only": {
+              "type": "boolean",
+              "description": "只取 article/main 主体内容（默认 false）"
+            },
+            "include_links": {
+              "type": "boolean",
+              "description": "输出链接清单（默认 true）"
+            },
+            "include_images": {
+              "type": "boolean",
+              "description": "输出图片清单（默认 true）"
+            },
+            "include_tables": {
+              "type": "boolean",
+              "description": "输出表格数据（默认 true）"
+            },
+            "max_text_chars": {
+              "type": "string",
+              "description": "正文最大字符数（默认 20000）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_html_analyze",
+        "description": "[HTML 网页] 质量审查：SEO、无障碍、可读性、外链分布、配色与字号统计、关键词",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "top_n": {
+              "type": "integer",
+              "description": "关键词数量（默认 20）"
+            },
+            "main_only": {
+              "type": "boolean",
+              "description": "只分析主体内容（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_html_transform",
+        "description": "[HTML 网页] 转换与打包：Markdown / 纯文本 / 自包含单文件 / 抽取 CSS·JS / 净化 / 格式化（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "to_markdown | to_text | inline_assets | extract_css | extract_js | extract_tables | sanitize | prettify | minify | rewrite_links"
+            },
+            "base": {
+              "type": "string",
+              "description": "rewrite_links：把相对链接改为该基地址"
+            },
+            "keep_scripts": {
+              "type": "boolean",
+              "description": "sanitize 时是否保留 <script>（默认 false）"
+            },
+            "embed_base64": {
+              "type": "boolean",
+              "description": "inline_assets 是否把图片转为 base64 data URI（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_html_edit",
+        "description": "[HTML 网页] 修改页面：替换文本/改标题/写 meta/选择器增删改节点/注入 CSS（会修改输入文件并自动备份）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "replace_text | set_title | add_meta | inject_html | remove_elements | set_attribute | add_stylesheet | set_lang"
+            },
+            "find": {
+              "type": "string",
+              "description": "replace_text：查找内容（或 CSS 选择器，配合 target=selector）"
+            },
+            "replace": {
+              "type": "string",
+              "description": "replace_text：替换内容"
+            },
+            "target": {
+              "type": "string",
+              "description": "replace_text：限定在某个选择器内替换"
+            },
+            "selector": {
+              "type": "string",
+              "description": "remove_elements / inject_html / set_attribute：CSS 选择器"
+            },
+            "text": {
+              "type": "string",
+              "description": "set_title / inject_html：文本或 HTML 片段"
+            },
+            "position": {
+              "type": "string",
+              "description": "inject_html：append（默认）| prepend | before | after | body_end | head_end"
+            },
+            "name": {
+              "type": "string",
+              "description": "add_meta / set_attribute：属性名"
+            },
+            "content": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "add_meta / set_attribute：属性值"
+            },
+            "in_place": {
+              "type": "boolean",
+              "description": "是否就地保存（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_image_probe",
+        "description": "[图片（PNG/JPG 等）] 快速探测：格式、尺寸、模式、DPI、透明度、动画、体积",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "exif": {
+              "type": "string",
+              "description": "是否附带 EXIF 概要（默认 false）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_image_read",
+        "description": "[图片（PNG/JPG 等）] 读取元数据：EXIF（含 GPS）、ICC、调色板、质量指标",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "include_exif": {
+              "type": "boolean",
+              "description": "是否输出完整 EXIF（默认 true）"
+            },
+            "include_palette": {
+              "type": "boolean",
+              "description": "是否输出主色板（默认 true）"
+            },
+            "palette_size": {
+              "type": "integer",
+              "description": "主色数量（默认 8）"
+            },
+            "include_metrics": {
+              "type": "boolean",
+              "description": "是否输出质量指标（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_image_analyze",
+        "description": "[图片（PNG/JPG 等）] 内容识别：OCR 文字 + 版面还原 + 类型判别 + 视觉桥接载荷",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "ocr": {
+              "type": "boolean",
+              "description": "是否做 OCR（默认 true；设为 false 则只做统计与判别）"
+            },
+            "ocr_langs": {
+              "type": "string",
+              "description": "OCR 语言，默认 chi_sim+eng"
+            },
+            "ocr_backend": {
+              "type": "string",
+              "description": "auto / rapidocr / tesseract / easyocr"
+            },
+            "ocr_min_confidence": {
+              "type": "number",
+              "description": "过滤低于该置信度的文本块（默认 0.4）"
+            },
+            "binarize": {
+              "type": "boolean",
+              "description": "OCR 前是否二值化（默认 false，扫描件可开启）"
+            },
+            "vision_payload": {
+              "type": "boolean",
+              "description": "是否输出多模态视觉分析载荷（默认 false，会显著增大响应体）"
+            },
+            "palette_size": {
+              "type": "integer",
+              "description": "主色数量（默认 8）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_image_transform",
+        "description": "[图片（PNG/JPG 等）] 转换与导出：格式转换、缩放、裁剪、旋转、压缩、水印、转 PDF、base64（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "convert | resize | thumbnail | crop | rotate | flip | grayscale | compress | watermark | to_pdf | to_base64 | auto_orient | strip_exif | sprite"
+            },
+            "format": {
+              "type": "string",
+              "description": "convert：目标格式 png/jpg/webp/bmp/tiff"
+            },
+            "width": {
+              "type": "integer",
+              "description": "resize：目标宽度（像素）"
+            },
+            "height": {
+              "type": "integer",
+              "description": "resize：目标高度（像素）"
+            },
+            "percent": {
+              "type": "number",
+              "description": "resize/thumbnail：按百分比缩放"
+            },
+            "keep_aspect": {
+              "type": "boolean",
+              "description": "resize：是否保持比例（默认 true）"
+            },
+            "box": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array"
+                }
+              ],
+              "description": "crop/redact：left,top,right,bottom"
+            },
+            "angle": {
+              "type": "integer",
+              "description": "rotate：旋转角度（度，逆时针）"
+            },
+            "quality": {
+              "type": "integer",
+              "description": "compress：JPEG 质量 1-100（默认 80）"
+            },
+            "text": {
+              "type": "string",
+              "description": "watermark：水印文字"
+            },
+            "max_side": {
+              "type": "integer",
+              "description": "thumbnail：最长边像素（默认 512）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_image_edit",
+        "description": "[图片（PNG/JPG 等）] 就地编辑：打码遮盖、模糊/马赛克区域、文字标注、画框、加边框、拼网格（会修改输入文件并自动备份）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "redact | blur_region | pixelate_region | annotate_text | draw_box | add_border | draw_grid | watermark"
+            },
+            "box": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array"
+                }
+              ],
+              "description": "目标区域 left,top,right,bottom（redact/blur/pixelate/draw_box）"
+            },
+            "text": {
+              "type": "string",
+              "description": "annotate_text：标注文字；watermark：水印文字"
+            },
+            "color": {
+              "type": "string",
+              "description": "draw_box / annotate_text：颜色，如 #FF0000 或 red"
+            },
+            "width": {
+              "type": "integer",
+              "description": "draw_box / add_border：线宽（默认 3）"
+            },
+            "radius": {
+              "type": "integer",
+              "description": "blur_region：模糊半径（默认 12）"
+            },
+            "block": {
+              "type": "integer",
+              "description": "pixelate_region：马赛克块大小（默认 12）"
+            },
+            "opacity": {
+              "type": "integer",
+              "description": "redact：遮盖不透明度（默认 100）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pdf_probe",
+        "description": "[PDF 文档] 快速概览：页数、元数据、加密状态、PDF 版本、书签数、首页文本预览",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "preview_chars": {
+              "type": "string",
+              "description": "首页文本预览字符数（默认 300）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pdf_read",
+        "description": "[PDF 文档] 按页结构化读取：每页文本与字符数、元数据、书签大纲、文本统计",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "page_range": {
+              "type": "string",
+              "description": "页码区间，如 1-5 或 3 或 all（默认 all，1 基）"
+            },
+            "max_chars": {
+              "type": "string",
+              "description": "文本输出上限（默认 30000）"
+            },
+            "include_outline": {
+              "type": "boolean",
+              "description": "是否输出书签大纲（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pdf_analyze",
+        "description": "[PDF 文档] 质量诊断：关键词、逐页字符分布、空页/纯图页识别、加密与元数据完整性检查",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "top_n": {
+              "type": "integer",
+              "description": "关键词数量（默认 20）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pdf_transform",
+        "description": "[PDF 文档] 转换导出：to_text（全文 txt）/ to_markdown（分页 md）/ to_json（逐页结构化）/ split（按页拆出新 PDF）（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "to_text | to_markdown | to_json | split"
+            },
+            "page_range": {
+              "type": "string",
+              "description": "页码区间（默认 all，1 基）"
+            },
+            "split_pages": {
+              "type": "string",
+              "description": "split：每份页数（默认 1）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pptx_probe",
+        "description": "[PPTX 演示文稿] ZIP 层快速探测：页数、媒体、备注、尺寸，不依赖 python-pptx",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "deep": {
+              "type": "boolean",
+              "description": "true 时额外用 python-pptx 解析版式与占位符（默认 false）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pptx_read",
+        "description": "[PPTX 演示文稿] 结构化读取全部幻灯片（标题/形状/表格/图表/备注/图片）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "include_notes": {
+              "type": "boolean",
+              "description": "是否读备注页（默认 true）"
+            },
+            "include_tables": {
+              "type": "boolean",
+              "description": "是否读表格内容（默认 true）"
+            },
+            "include_charts": {
+              "type": "boolean",
+              "description": "是否读图表数据（默认 true）"
+            },
+            "include_empty": {
+              "type": "boolean",
+              "description": "是否保留空文本框（默认 false）"
+            },
+            "slide_range": {
+              "type": "string",
+              "description": "指定页码，如 '1-5' 或 '2,4,7'（默认全部）"
+            },
+            "include_runs": {
+              "type": "boolean",
+              "description": "是否细化到 run 级字体信息（默认 false）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pptx_analyze",
+        "description": "[PPTX 演示文稿] 内容识别：大纲、字数、关键词、字体/配色分布、空页检测、图片 OCR",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "top_n": {
+              "type": "integer",
+              "description": "关键词数量（默认 20）"
+            },
+            "ocr": {
+              "type": "boolean",
+              "description": "是否对幻灯片内图片做 OCR（默认 false）"
+            },
+            "ocr_langs": {
+              "type": "string",
+              "description": "OCR 语言，默认 chi_sim+eng"
+            },
+            "ocr_backend": {
+              "type": "string",
+              "description": "auto / rapidocr / tesseract / easyocr"
+            },
+            "min_chars_per_slide": {
+              "type": "string",
+              "description": "低于该字数视为稀疏页（默认 10）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pptx_transform",
+        "description": "[PPTX 演示文稿] 导出为 Markdown / 纯文本 / 大纲 JSON / 图片 / 媒体 / PDF（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "to_markdown | to_text | to_outline_json | export_images | export_media | render"
+            },
+            "render_format": {
+              "type": "string",
+              "description": "render 时的目标格式：pdf（默认）或 png"
+            },
+            "layout_placeholder": {
+              "type": "string",
+              "description": "是否导出版式占位提示（to_markdown 时，默认 false）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_pptx_edit",
+        "description": "[PPTX 演示文稿] 修改演示文稿：查找替换（保格式）/改标题/增删复制页/加文本框/写属性（会修改输入文件并自动备份）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "replace_text | set_title | set_notes | add_slide | delete_slide | duplicate_slide | append_bullets | add_textbox | move_slide | set_core_properties"
+            },
+            "find": {
+              "type": "string",
+              "description": "replace_text：查找内容"
+            },
+            "replace": {
+              "type": "string",
+              "description": "replace_text：替换内容"
+            },
+            "regex": {
+              "type": "boolean",
+              "description": "replace_text：是否按正则（默认 false）"
+            },
+            "slide": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "array"
+                }
+              ],
+              "description": "目标页码（1 基）"
+            },
+            "text": {
+              "type": "string",
+              "description": "set_title / set_notes：新文本"
+            },
+            "title": {
+              "type": "string",
+              "description": "add_slide：标题"
+            },
+            "bullets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "add_slide / append_bullets：要点列表"
+            },
+            "layout_index": {
+              "type": "integer",
+              "description": "add_slide：版式索引（默认 1）"
+            },
+            "in_place": {
+              "type": "boolean",
+              "description": "是否就地保存（默认 true；false 则另存为 <名称>_edited.pptx）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_txt_probe",
+        "description": "[纯文本文件] 快速概览：编码、行尾风格、行数、空行占比、最长行、开头预览",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "preview_chars": {
+              "type": "string",
+              "description": "开头预览字符数（默认 300）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_txt_read",
+        "description": "[纯文本文件] 结构化读取：全文或带行号片段、文本统计、行尾与编码信息",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "max_chars": {
+              "type": "string",
+              "description": "输出正文最大字符数（默认 20000，full=true 时忽略）"
+            },
+            "full": {
+              "type": "string",
+              "description": "是否返回全文不截断（默认 false）"
+            },
+            "line_numbers": {
+              "type": "string",
+              "description": "是否输出带行号的行列表（默认 false）"
+            },
+            "offset": {
+              "type": "string",
+              "description": "起始行号（0 基，默认 0）"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "最多返回的行数（默认 500）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_txt_analyze",
+        "description": "[纯文本文件] 内容分析：词频关键词、行级分布、重复行 Top、疑似乱码与格式问题诊断",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "top_n": {
+              "type": "integer",
+              "description": "关键词数量（默认 20）"
+            },
+            "duplicate_min": {
+              "type": "string",
+              "description": "重复行计入的最小长度（默认 4）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_txt_transform",
+        "description": "[纯文本文件] 转换导出：to_json（行数组）/ to_jsonl / to_markdown（段落化）/ normalize（规范行尾与空白）（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "to_json | to_jsonl | to_markdown | normalize"
+            },
+            "encoding": {
+              "type": "string",
+              "description": "输出编码（默认 utf-8）"
+            },
+            "crlf": {
+              "type": "string",
+              "description": "normalize 输出行尾：true=CRLF（Windows），false=LF（Unix，默认）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_txt_edit",
+        "description": "[纯文本文件] 修改文本：replace（查找替换）/ append / prepend / delete_lines（按模式删行）/ normalize（就地清理）（会修改输入文件并自动备份）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "replace | append | prepend | delete_lines | normalize"
+            },
+            "find": {
+              "type": "string",
+              "description": "replace / delete_lines：查找内容或正则"
+            },
+            "replace": {
+              "type": "string",
+              "description": "replace：替换内容（默认空串即删除）"
+            },
+            "regex": {
+              "type": "boolean",
+              "description": "find 是否按正则解释（默认 false）"
+            },
+            "ignore_case": {
+              "type": "boolean",
+              "description": "是否忽略大小写（默认 false）"
+            },
+            "text": {
+              "type": "string",
+              "description": "append / prepend：追加或前置的文本"
+            },
+            "in_place": {
+              "type": "boolean",
+              "description": "是否就地保存（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_xlsx_probe",
+        "description": "[XLSX 工作表] 工作簿概览：工作表、尺寸、公式/图表/合并/冻结、命名区域",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "deep": {
+              "type": "boolean",
+              "description": "true 时统计每张表的公式与合并单元格数量（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_xlsx_read",
+        "description": "[XLSX 工作表] 读取表格数据：值 + 公式 + 表头 + 记录 + 合并单元格",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "sheet": {
+              "type": "string",
+              "description": "工作表名或索引（默认第一张）；all 表示全部"
+            },
+            "header_row": {
+              "type": "integer",
+              "description": "表头所在行（默认 1；0 表示无表头）"
+            },
+            "max_rows": {
+              "type": "integer",
+              "description": "每张表最多返回的数据行数（默认 500）"
+            },
+            "max_cols": {
+              "type": "integer",
+              "description": "每张表最多返回的列数（默认 100）"
+            },
+            "mode": {
+              "type": "string",
+              "description": "values（默认，优先缓存值）| formulas | both"
+            },
+            "include_formulas": {
+              "type": "boolean",
+              "description": "是否附带公式明细（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_xlsx_analyze",
+        "description": "[XLSX 工作表] 数据分析：描述统计、缺失率、唯一值、重复行、相关性、分组聚合、离群点",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "sheet": {
+              "type": "string",
+              "description": "工作表名或索引（默认第一张）"
+            },
+            "header_row": {
+              "type": "integer",
+              "description": "表头所在行（默认 1）"
+            },
+            "by": {
+              "type": "string",
+              "description": "分组聚合的分组列名（可选）"
+            },
+            "agg": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array"
+                }
+              ],
+              "description": "分组聚合方式，如 sum,mean,count（默认 sum,mean,count）"
+            },
+            "top_n": {
+              "type": "integer",
+              "description": "每列 Top 值个数（默认 5）"
+            },
+            "corr": {
+              "type": "boolean",
+              "description": "是否输出数值列相关性（默认 true）"
+            },
+            "sample_rows": {
+              "type": "integer",
+              "description": "预览行数（默认 8）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_xlsx_transform",
+        "description": "[XLSX 工作表] 导出与转换：CSV / JSON / Markdown / HTML / 筛选 / 排序 / 合并 / 透视（产出文件）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "to_csv | to_json | to_markdown | to_html | filter | sort | merge_sheets | pivot"
+            },
+            "sheet": {
+              "type": "string",
+              "description": "工作表名或索引（默认第一张）"
+            },
+            "header_row": {
+              "type": "integer",
+              "description": "表头行（默认 1）"
+            },
+            "query": {
+              "type": "string",
+              "description": "filter：pandas query 表达式，如 '数值 > 10 and 区域 == \"华东\"'"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "sort/select：列名列表"
+            },
+            "ascending": {
+              "type": "string",
+              "description": "sort：是否升序（默认 true）"
+            },
+            "index": {
+              "type": "string",
+              "description": "pivot：行索引列"
+            },
+            "pivot_columns": {
+              "type": "string",
+              "description": "pivot：列方向字段"
+            },
+            "values": {
+              "type": "string",
+              "description": "pivot：聚合值字段"
+            },
+            "aggfunc": {
+              "type": "string",
+              "description": "pivot：聚合函数（默认 sum）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "file_xlsx_edit",
+        "description": "[XLSX 工作表] 修改工作簿：写单元格/公式、追加行、增删改工作表、设置格式、图表、冻结窗格（会修改输入文件并自动备份）",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "input": {
+              "type": "string",
+              "description": "输入文件的绝对路径"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出目录或文件路径（可选）"
+            },
+            "op": {
+              "type": "string",
+              "description": "set_cell | write_range | append_rows | set_formula | add_sheet | delete_sheet | rename_sheet | format_range | autofit | freeze_panes | merge_cells | insert_rows | delete_rows | replace_text | add_chart | set_column_width"
+            },
+            "sheet": {
+              "type": "string",
+              "description": "目标工作表（默认第一张）"
+            },
+            "cell": {
+              "type": "string",
+              "description": "set_cell / set_formula：单元格坐标，如 B2"
+            },
+            "value": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "set_cell：写入值"
+            },
+            "formula": {
+              "type": "string",
+              "description": "set_formula：公式，如 =SUM(B2:B10)"
+            },
+            "range": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "array"
+                }
+              ],
+              "description": "write_range / format_range 的区间，如 A1:C10"
+            },
+            "rows": {
+              "anyOf": [
+                {
+                  "type": "array"
+                },
+                {
+                  "type": "string"
+                }
+              ],
+              "description": "write_range / append_rows：二维数组"
+            },
+            "name": {
+              "type": "string",
+              "description": "add_sheet / rename_sheet 的工作表名"
+            },
+            "in_place": {
+              "type": "boolean",
+              "description": "是否就地保存（默认 true）"
+            }
+          },
+          "required": [
+            "input"
+          ]
+        }
+      }
+    }
+  ]
+}

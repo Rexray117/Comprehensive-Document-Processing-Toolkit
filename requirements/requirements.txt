@@ -1,0 +1,18 @@
+# omni-file-toolkit 核心依赖
+# 安装： <venv-python> -m pip install -r requirements.txt
+#
+# 说明：以下依赖均为「纯 pip 可装、无需系统级可执行文件」，覆盖五个模块的全部核心能力。
+# OCR 链路（图像文字识别）是唯一可选的额外依赖，见 requirements-ocr.txt。
+
+python-pptx>=1.0.2        # PPTX 读写
+python-docx>=1.1.2        # DOCX 读写
+openpyxl>=3.1.5           # XLSX 读写、公式、样式、图表
+pandas>=2.2.0             # 表格数据分析
+numpy>=1.26.0             # 图像质量指标、数值统计
+Pillow>=10.4.0            # 图像读写与处理
+beautifulsoup4>=4.12.3    # HTML 解析
+lxml>=5.2.0               # 高速 XML/HTML 解析器（BeautifulSoup 后端）
+markdownify>=0.13.1       # HTML → Markdown
+html2text>=2024.2.26      # HTML → Markdown（备选实现）
+filetype>=1.2.0           # 基于魔数的文件类型嗅探
+charset-normalizer>=3.3.2  # 文本编码自动探测
