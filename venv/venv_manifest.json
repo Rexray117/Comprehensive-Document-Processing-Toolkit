@@ -1,0 +1,1424 @@
+{
+  "generated_at": "2026-10-12",
+  "python": {
+    "version": "3.13.14",
+    "implementation": "CPython",
+    "venv_home_expected": "C:\\Users\\ASUS\\.workbuddy\\binaries\\python\\versions\\3.13.12",
+    "min_python_for_rebuild": "3.13"
+  },
+  "platform": "Windows-11-10.0.26100-SP0",
+  "venv_total_size_bytes": 637958502,
+  "venv_total_size_human": "608.4 MB",
+  "file_count": 8998,
+  "package_count": 117,
+  "role_stats": {
+    "direct_required": {
+      "count": 12,
+      "size_human": "103.2 MB"
+    },
+    "direct_optional": {
+      "count": 11,
+      "size_human": "316.1 MB"
+    },
+    "transitive": {
+      "count": 94,
+      "size_human": "289.2 MB"
+    }
+  },
+  "rebuild_command": "python -m pip install -r pip-freeze-snapshot.txt",
+  "packages": [
+    {
+      "name": "opencv-python-headless",
+      "version": "5.0.0.93",
+      "role": "direct_optional",
+      "size_bytes": 117603801,
+      "size_human": "112.2 MB",
+      "files": 47,
+      "summary": "Wrapper package for OpenCV python bindings.",
+      "requires": [
+        "numpy<2.0; python_version < \"3.9\"",
+        "numpy>=2; python_version >= \"3.9\""
+      ]
+    },
+    {
+      "name": "opencv-python",
+      "version": "5.0.0.93",
+      "role": "direct_optional",
+      "size_bytes": 117603729,
+      "size_human": "112.2 MB",
+      "files": 47,
+      "summary": "Wrapper package for OpenCV python bindings.",
+      "requires": [
+        "numpy<2.0; python_version < \"3.9\"",
+        "numpy>=2; python_version >= \"3.9\""
+      ]
+    },
+    {
+      "name": "patchright",
+      "version": "1.63.0",
+      "role": "transitive",
+      "size_bytes": 109831968,
+      "size_human": "104.7 MB",
+      "files": 191,
+      "summary": "Undetected Python version of the Playwright testing and automation library.",
+      "requires": [
+        "pyee<14,>=13",
+        "greenlet<4.0.0,>=3.1.1"
+      ]
+    },
+    {
+      "name": "playwright",
+      "version": "1.62.0",
+      "role": "transitive",
+      "size_bytes": 108703094,
+      "size_human": "103.7 MB",
+      "files": 189,
+      "summary": "A high-level API to automate web browsers",
+      "requires": [
+        "pyee<14,>=13",
+        "greenlet<4.0.0,>=3.1.1"
+      ]
+    },
+    {
+      "name": "numpy",
+      "version": "2.5.3",
+      "role": "direct_required",
+      "size_bytes": 42150834,
+      "size_human": "40.2 MB",
+      "files": 949,
+      "summary": "Fundamental package for array computing in Python",
+      "requires": []
+    },
+    {
+      "name": "onnxruntime",
+      "version": "1.30.0",
+      "role": "direct_optional",
+      "size_bytes": 41997822,
+      "size_human": "40.1 MB",
+      "files": 326,
+      "summary": "ONNX Runtime is a runtime accelerator for Machine Learning models",
+      "requires": [
+        "flatbuffers",
+        "numpy>=1.21.6",
+        "packaging",
+        "protobuf>=4.25.8"
+      ]
+    },
+    {
+      "name": "pandas",
+      "version": "3.0.5",
+      "role": "direct_required",
+      "size_bytes": 35467866,
+      "size_human": "33.8 MB",
+      "files": 1570,
+      "summary": "Powerful data structures for data analysis, time series, and statistics",
+      "requires": [
+        "numpy>=1.26.0; python_version < \"3.14\"",
+        "numpy>=2.3.3; python_version >= \"3.14\"",
+        "python-dateutil>=2.8.2",
+        "tzdata; sys_platform == \"win32\"",
+        "tzdata; sys_platform == \"emscripten\""
+      ]
+    },
+    {
+      "name": "rapidocr",
+      "version": "3.10.0",
+      "role": "direct_optional",
+      "size_bytes": 32543477,
+      "size_human": "31.0 MB",
+      "files": 103,
+      "summary": "Awesome OCR Library",
+      "requires": [
+        "pyclipper>=1.2.0",
+        "opencv-python-headless>=4.5.1.48",
+        "numpy<3.0.0,>=1.19.5",
+        "six>=1.15.0",
+        "Shapely!=2.0.4,>=1.7.1",
+        "PyYAML",
+        "Pillow",
+        "tqdm",
+        "omegaconf!=2.2.1",
+        "requests",
+        "colorlog"
+      ]
+    },
+    {
+      "name": "pillow",
+      "version": "12.3.0",
+      "role": "direct_required",
+      "size_bytes": 14763430,
+      "size_human": "14.1 MB",
+      "files": 123,
+      "summary": "Python Imaging Library (fork)",
+      "requires": []
+    },
+    {
+      "name": "rapidocr-onnxruntime",
+      "version": "1.2.3",
+      "role": "direct_optional",
+      "size_bytes": 13877231,
+      "size_human": "13.2 MB",
+      "files": 27,
+      "summary": "A cross platform OCR Library based on OnnxRuntime.",
+      "requires": [
+        "pyclipper (>=1.2.1)",
+        "onnxruntime (>=1.7.0)",
+        "opencv-python (>=4.5.1.48)",
+        "numpy (>=1.19.3)",
+        "six (>=1.15.0)",
+        "Shapely (>=1.7.1)",
+        "PyYAML",
+        "Pillow"
+      ]
+    },
+    {
+      "name": "cryptography",
+      "version": "48.0.1",
+      "role": "transitive",
+      "size_bytes": 10465198,
+      "size_human": "10.0 MB",
+      "files": 118,
+      "summary": "cryptography is a package which provides cryptographic recipes and primitives to Python developers.",
+      "requires": [
+        "cffi>=2.0.0 ; platform_python_implementation != 'PyPy'",
+        "typing-extensions>=4.13.2 ; python_full_version < '3.11'"
+      ]
+    },
+    {
+      "name": "mitmproxy_rs",
+      "version": "0.12.11",
+      "role": "transitive",
+      "size_bytes": 9148084,
+      "size_human": "8.7 MB",
+      "files": 24,
+      "summary": "",
+      "requires": [
+        "mitmproxy-windows==0.12.11 ; os_name == 'nt'",
+        "mitmproxy-linux==0.12.11 ; sys_platform == 'linux'",
+        "mitmproxy-macos==0.12.11 ; sys_platform == 'darwin'"
+      ]
+    },
+    {
+      "name": "lxml",
+      "version": "6.1.3",
+      "role": "direct_required",
+      "size_bytes": 8947502,
+      "size_human": "8.5 MB",
+      "files": 180,
+      "summary": "Powerful and Pythonic XML processing library combining libxml2/libxslt with the ElementTree API.",
+      "requires": []
+    },
+    {
+      "name": "pip",
+      "version": "26.2.1",
+      "role": "transitive",
+      "size_bytes": 6015518,
+      "size_human": "5.7 MB",
+      "files": 481,
+      "summary": "The PyPA recommended tool for installing Python packages.",
+      "requires": []
+    },
+    {
+      "name": "shapely",
+      "version": "2.1.2",
+      "role": "direct_optional",
+      "size_bytes": 5103670,
+      "size_human": "4.9 MB",
+      "files": 143,
+      "summary": "Manipulation and analysis of geometric objects",
+      "requires": [
+        "numpy>=1.21"
+      ]
+    },
+    {
+      "name": "mitmproxy",
+      "version": "12.2.3",
+      "role": "transitive",
+      "size_bytes": 4852753,
+      "size_human": "4.6 MB",
+      "files": 296,
+      "summary": "An interactive, SSL/TLS-capable intercepting proxy for HTTP/1, HTTP/2, and WebSockets.",
+      "requires": [
+        "aioquic<=1.2.0,>=1.2.0",
+        "argon2-cffi<=25.1.0,>=23.1.0",
+        "asgiref<=3.11.1,>=3.2.10",
+        "bcrypt<=5.0.0,>=5.0.0",
+        "Brotli<=1.2.0,>=1.0",
+        "certifi>=2019.9.11",
+        "cryptography<=48.1,>=42.0",
+        "flask<=3.1.3,>=3.0",
+        "h11<=0.16.0,>=0.16.0",
+        "h2<=4.3.0,>=4.3.0",
+        "hyperframe<=6.1.0,>=6.0",
+        "kaitaistruct<=0.11,>=0.10",
+        "ldap3<=2.9.1,>=2.8",
+        "mitmproxy-rs<0.13,>=0.12.6",
+        "msgpack<=1.1.2,>=1.0.0"
+      ]
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "role": "transitive",
+      "size_bytes": 4748760,
+      "size_human": "4.5 MB",
+      "files": 351,
+      "summary": "Pygments is a syntax highlighting package written in Python.",
+      "requires": []
+    },
+    {
+      "name": "curl_cffi",
+      "version": "0.16.3",
+      "role": "transitive",
+      "size_bytes": 4464639,
+      "size_human": "4.3 MB",
+      "files": 41,
+      "summary": "libcurl ffi bindings for Python, with impersonation support.",
+      "requires": [
+        "cffi>=2.0.0",
+        "certifi>=2024.2.2"
+      ]
+    },
+    {
+      "name": "aioquic",
+      "version": "1.2.0",
+      "role": "transitive",
+      "size_bytes": 4177786,
+      "size_human": "4.0 MB",
+      "files": 42,
+      "summary": "An implementation of QUIC and HTTP/3",
+      "requires": [
+        "certifi",
+        "cryptography >=42.0.0",
+        "pylsqpack <0.4.0,>=0.3.3",
+        "pyopenssl >=24",
+        "service-identity >=24.1.0"
+      ]
+    },
+    {
+      "name": "camoufox",
+      "version": "0.5.8",
+      "role": "transitive",
+      "size_bytes": 3839708,
+      "size_human": "3.7 MB",
+      "files": 55,
+      "summary": "Wrapper around Playwright to help launch Camoufox",
+      "requires": [
+        "fpgen (>=1.3.0,<2.0.0)",
+        "inquirer",
+        "language-tags",
+        "numpy",
+        "orjson",
+        "platformdirs",
+        "playwright (<1.63)",
+        "pysocks",
+        "pyyaml",
+        "requests",
+        "rich",
+        "rich-click",
+        "screeninfo",
+        "typing_extensions",
+        "ua_parser"
+      ]
+    },
+    {
+      "name": "wcwidth",
+      "version": "0.9.2",
+      "role": "transitive",
+      "size_bytes": 3041036,
+      "size_human": "2.9 MB",
+      "files": 57,
+      "summary": "Measures the displayed width of unicode strings in a terminal",
+      "requires": []
+    },
+    {
+      "name": "ldap3",
+      "version": "2.9.1",
+      "role": "transitive",
+      "size_bytes": 2291975,
+      "size_human": "2.2 MB",
+      "files": 119,
+      "summary": "A strictly RFC 4510 conforming LDAP V3 pure Python client library",
+      "requires": [
+        "pyasn1 (>=0.4.6)"
+      ]
+    },
+    {
+      "name": "pypdf",
+      "version": "6.20.0",
+      "role": "direct_required",
+      "size_bytes": 1748567,
+      "size_human": "1.7 MB",
+      "files": 66,
+      "summary": "A pure-python PDF library capable of splitting, merging, cropping, and transforming PDF files",
+      "requires": [
+        "typing_extensions >= 4.0; python_version < '3.11'"
+      ]
+    },
+    {
+      "name": "protobuf",
+      "version": "7.36.1",
+      "role": "transitive",
+      "size_bytes": 1715215,
+      "size_human": "1.6 MB",
+      "files": 64,
+      "summary": "",
+      "requires": []
+    },
+    {
+      "name": "indexed_zstd",
+      "version": "1.7.1",
+      "role": "transitive",
+      "size_bytes": 1695233,
+      "size_human": "1.6 MB",
+      "files": 10,
+      "summary": "Fast random access to zstd files",
+      "requires": []
+    },
+    {
+      "name": "tornado",
+      "version": "6.5.5",
+      "role": "transitive",
+      "size_bytes": 1694781,
+      "size_human": "1.6 MB",
+      "files": 98,
+      "summary": "Tornado is a Python web framework and asynchronous networking library, originally developed at FriendFeed.",
+      "requires": []
+    },
+    {
+      "name": "language-tags",
+      "version": "1.3.1",
+      "role": "transitive",
+      "size_bytes": 1579309,
+      "size_human": "1.5 MB",
+      "files": 24,
+      "summary": "This project is a Python version of the language-tags Javascript project.",
+      "requires": []
+    },
+    {
+      "name": "python-docx",
+      "version": "1.2.0",
+      "role": "direct_required",
+      "size_bytes": 1556225,
+      "size_human": "1.5 MB",
+      "files": 126,
+      "summary": "Create, read, and update Microsoft Word .docx files.",
+      "requires": [
+        "lxml>=3.1.0",
+        "typing_extensions>=4.9.0"
+      ]
+    },
+    {
+      "name": "zstandard",
+      "version": "0.25.0",
+      "role": "transitive",
+      "size_bytes": 1377547,
+      "size_human": "1.3 MB",
+      "files": 12,
+      "summary": "Zstandard bindings for Python",
+      "requires": []
+    },
+    {
+      "name": "python-pptx",
+      "version": "1.0.2",
+      "role": "direct_required",
+      "size_bytes": 1292367,
+      "size_human": "1.2 MB",
+      "files": 117,
+      "summary": "Create, read, and update PowerPoint 2007+ (.pptx) files.",
+      "requires": [
+        "Pillow >=3.3.2",
+        "XlsxWriter >=0.5.7",
+        "lxml >=3.1.0",
+        "typing-extensions >=4.9.0"
+      ]
+    },
+    {
+      "name": "rich",
+      "version": "15.0.0",
+      "role": "transitive",
+      "size_bytes": 1250880,
+      "size_human": "1.2 MB",
+      "files": 106,
+      "summary": "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal",
+      "requires": [
+        "markdown-it-py (>=2.2.0)",
+        "pygments (>=2.13.0,<3.0.0)"
+      ]
+    },
+    {
+      "name": "mitmproxy-windows",
+      "version": "0.12.11",
+      "role": "transitive",
+      "size_bytes": 1222898,
+      "size_human": "1.2 MB",
+      "files": 11,
+      "summary": "",
+      "requires": []
+    },
+    {
+      "name": "opencc-python-reimplemented",
+      "version": "0.1.7",
+      "role": "direct_optional",
+      "size_bytes": 1149988,
+      "size_human": "1.1 MB",
+      "files": 36,
+      "summary": "OpenCC made with Python",
+      "requires": []
+    },
+    {
+      "name": "urwid",
+      "version": "3.0.5",
+      "role": "transitive",
+      "size_bytes": 1093804,
+      "size_human": "1.0 MB",
+      "files": 75,
+      "summary": "A full-featured console (xterm et al.) user interface library",
+      "requires": [
+        "wcwidth>=0.4"
+      ]
+    },
+    {
+      "name": "omegaconf",
+      "version": "2.4.0",
+      "role": "transitive",
+      "size_bytes": 970710,
+      "size_human": "948.0 KB",
+      "files": 95,
+      "summary": "A flexible configuration library",
+      "requires": [
+        "PyYAML>=5.1.0"
+      ]
+    },
+    {
+      "name": "pylsqpack",
+      "version": "0.3.24",
+      "role": "transitive",
+      "size_bytes": 893399,
+      "size_human": "872.5 KB",
+      "files": 11,
+      "summary": "Python wrapper for the ls-qpack QPACK library",
+      "requires": []
+    },
+    {
+      "name": "openpyxl",
+      "version": "3.1.5",
+      "role": "direct_required",
+      "size_bytes": 875065,
+      "size_human": "854.6 KB",
+      "files": 197,
+      "summary": "A Python library to read/write Excel 2010 xlsx/xlsm files",
+      "requires": [
+        "et-xmlfile"
+      ]
+    },
+    {
+      "name": "brotli",
+      "version": "1.2.0",
+      "role": "transitive",
+      "size_bytes": 866775,
+      "size_human": "846.5 KB",
+      "files": 8,
+      "summary": "Python bindings for the Brotli compression library",
+      "requires": []
+    },
+    {
+      "name": "greenlet",
+      "version": "3.5.6",
+      "role": "transitive",
+      "size_bytes": 861959,
+      "size_human": "841.8 KB",
+      "files": 100,
+      "summary": "Lightweight in-process concurrent programming",
+      "requires": []
+    },
+    {
+      "name": "xlsxwriter",
+      "version": "3.2.9",
+      "role": "direct_optional",
+      "size_bytes": 854725,
+      "size_human": "834.7 KB",
+      "files": 49,
+      "summary": "A Python module for creating Excel XLSX files.",
+      "requires": []
+    },
+    {
+      "name": "Werkzeug",
+      "version": "3.1.9",
+      "role": "transitive",
+      "size_bytes": 777072,
+      "size_human": "758.9 KB",
+      "files": 64,
+      "summary": "The comprehensive WSGI web application library.",
+      "requires": [
+        "markupsafe>=2.1.1"
+      ]
+    },
+    {
+      "name": "cffi",
+      "version": "2.1.1",
+      "role": "transitive",
+      "size_bytes": 676539,
+      "size_human": "660.7 KB",
+      "files": 33,
+      "summary": "Foreign Function Interface for Python calling C code.",
+      "requires": [
+        "pycparser; implementation_name != \"PyPy\""
+      ]
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.5.1",
+      "role": "direct_required",
+      "size_bytes": 664731,
+      "size_human": "649.2 KB",
+      "files": 24,
+      "summary": "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet.",
+      "requires": []
+    },
+    {
+      "name": "tzdata",
+      "version": "2026.3",
+      "role": "transitive",
+      "size_bytes": 584173,
+      "size_human": "570.5 KB",
+      "files": 634,
+      "summary": "Provider of IANA time zone data",
+      "requires": []
+    },
+    {
+      "name": "ruamel.yaml",
+      "version": "0.19.1",
+      "role": "transitive",
+      "size_bytes": 564356,
+      "size_human": "551.1 KB",
+      "files": 40,
+      "summary": "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key o",
+      "requires": []
+    },
+    {
+      "name": "cloakbrowser",
+      "version": "0.6.1",
+      "role": "transitive",
+      "size_bytes": 559047,
+      "size_human": "545.9 KB",
+      "files": 27,
+      "summary": "Stealth Chromium that passes every bot detection test. Drop-in Playwright replacement with source-level fingerprint patc",
+      "requires": [
+        "cryptography>=41.0",
+        "httpx>=0.24",
+        "playwright>=1.53"
+      ]
+    },
+    {
+      "name": "anyio",
+      "version": "4.15.1",
+      "role": "transitive",
+      "size_bytes": 541767,
+      "size_human": "529.1 KB",
+      "files": 54,
+      "summary": "High-level concurrency and networking framework on top of asyncio or Trio",
+      "requires": [
+        "exceptiongroup>=1.0.2; python_version < \"3.11\"",
+        "idna>=2.8",
+        "typing_extensions>=4.16.0; python_version < \"3.15\""
+      ]
+    },
+    {
+      "name": "blessed",
+      "version": "1.50.0",
+      "role": "transitive",
+      "size_bytes": 525734,
+      "size_human": "513.4 KB",
+      "files": 19,
+      "summary": "Easy, practical library for making terminal apps, by providing an elegant, well-documented interface for Terminals.",
+      "requires": [
+        "wcwidth>=0.8.3",
+        "jinxed>=2.1,<3"
+      ]
+    },
+    {
+      "name": "packaging",
+      "version": "26.3",
+      "role": "transitive",
+      "size_bytes": 500425,
+      "size_human": "488.7 KB",
+      "files": 30,
+      "summary": "Core utilities for Python packages",
+      "requires": []
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "role": "transitive",
+      "size_bytes": 498175,
+      "size_human": "486.5 KB",
+      "files": 32,
+      "summary": "A very fast and expressive template engine.",
+      "requires": [
+        "MarkupSafe>=2.0"
+      ]
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.3",
+      "role": "transitive",
+      "size_bytes": 479180,
+      "size_human": "467.9 KB",
+      "files": 25,
+      "summary": "YAML parser and emitter for Python",
+      "requires": []
+    },
+    {
+      "name": "pyparsing",
+      "version": "3.3.2",
+      "role": "transitive",
+      "size_bytes": 465046,
+      "size_human": "454.1 KB",
+      "files": 24,
+      "summary": "pyparsing - Classes and methods to define and execute parsing grammars",
+      "requires": []
+    },
+    {
+      "name": "Flask",
+      "version": "3.1.3",
+      "role": "transitive",
+      "size_bytes": 454449,
+      "size_human": "443.8 KB",
+      "files": 33,
+      "summary": "A simple framework for building complex web applications.",
+      "requires": [
+        "blinker>=1.9.0",
+        "click>=8.1.3",
+        "importlib-metadata>=3.6.0; python_version < '3.10'",
+        "itsdangerous>=2.2.0",
+        "jinja2>=3.1.2",
+        "markupsafe>=2.1.1",
+        "werkzeug>=3.1.0"
+      ]
+    },
+    {
+      "name": "urllib3",
+      "version": "2.8.0",
+      "role": "transitive",
+      "size_bytes": 452542,
+      "size_human": "441.9 KB",
+      "files": 43,
+      "summary": "HTTP library with thread-safe connection pooling, file post, and more.",
+      "requires": []
+    },
+    {
+      "name": "idna",
+      "version": "3.20",
+      "role": "transitive",
+      "size_bytes": 451066,
+      "size_human": "440.5 KB",
+      "files": 18,
+      "summary": "Internationalized Domain Names in Applications (IDNA)",
+      "requires": []
+    },
+    {
+      "name": "click",
+      "version": "8.5.0",
+      "role": "transitive",
+      "size_bytes": 448616,
+      "size_human": "438.1 KB",
+      "files": 23,
+      "summary": "Composable command line interface toolkit",
+      "requires": []
+    },
+    {
+      "name": "python-dateutil",
+      "version": "2.9.0.post0",
+      "role": "transitive",
+      "size_bytes": 442628,
+      "size_human": "432.3 KB",
+      "files": 26,
+      "summary": "Extensions to the standard Python datetime module",
+      "requires": [
+        "six >=1.5"
+      ]
+    },
+    {
+      "name": "rich-click",
+      "version": "1.9.9",
+      "role": "transitive",
+      "size_bytes": 428872,
+      "size_human": "418.8 KB",
+      "files": 32,
+      "summary": "Format click help output nicely with rich",
+      "requires": [
+        "click>=8",
+        "colorama; platform_system == \"Windows\"",
+        "rich>=12",
+        "typing-extensions>=4; python_version < \"3.11\""
+      ]
+    },
+    {
+      "name": "beautifulsoup4",
+      "version": "4.15.0",
+      "role": "direct_required",
+      "size_bytes": 407398,
+      "size_human": "397.8 KB",
+      "files": 23,
+      "summary": "Screen-scraping library",
+      "requires": [
+        "soupsieve>=1.6.1",
+        "typing-extensions>=4.0.0"
+      ]
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "role": "transitive",
+      "size_bytes": 404974,
+      "size_human": "395.5 KB",
+      "files": 31,
+      "summary": "The next generation HTTP client.",
+      "requires": [
+        "anyio",
+        "certifi",
+        "httpcore==1.*",
+        "idna"
+      ]
+    },
+    {
+      "name": "ua-parser-builtins",
+      "version": "202610",
+      "role": "transitive",
+      "size_bytes": 396682,
+      "size_human": "387.4 KB",
+      "files": 10,
+      "summary": "Precompiled rules for User Agent Parser",
+      "requires": []
+    },
+    {
+      "name": "pyasn1",
+      "version": "0.6.4",
+      "role": "transitive",
+      "size_bytes": 385669,
+      "size_human": "376.6 KB",
+      "files": 39,
+      "summary": "Pure-Python implementation of ASN.1 types and DER/BER/CER codecs (X.208)",
+      "requires": []
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.2.0",
+      "role": "transitive",
+      "size_bytes": 357354,
+      "size_human": "349.0 KB",
+      "files": 76,
+      "summary": "Python port of markdown-it. Markdown parsing, done right!",
+      "requires": [
+        "mdurl~=0.1"
+      ]
+    },
+    {
+      "name": "tqdm",
+      "version": "4.70.1",
+      "role": "transitive",
+      "size_bytes": 343485,
+      "size_human": "335.4 KB",
+      "files": 41,
+      "summary": "Fast, Extensible Progress Meter",
+      "requires": [
+        "colorama; platform_system == \"Windows\""
+      ]
+    },
+    {
+      "name": "bcrypt",
+      "version": "5.0.0",
+      "role": "transitive",
+      "size_bytes": 329112,
+      "size_human": "321.4 KB",
+      "files": 10,
+      "summary": "Modern password hashing for your software and your servers",
+      "requires": []
+    },
+    {
+      "name": "orjson",
+      "version": "3.13.0",
+      "role": "transitive",
+      "size_bytes": 322432,
+      "size_human": "314.9 KB",
+      "files": 12,
+      "summary": "Fast, correct Python JSON library supporting dataclasses, datetimes, and numpy",
+      "requires": []
+    },
+    {
+      "name": "jinxed",
+      "version": "2.1.0",
+      "role": "transitive",
+      "size_bytes": 304361,
+      "size_human": "297.2 KB",
+      "files": 65,
+      "summary": "Jinxed Terminal Library",
+      "requires": [
+        "ansicon; platform_system == \"Windows\""
+      ]
+    },
+    {
+      "name": "mammoth",
+      "version": "1.12.1",
+      "role": "direct_optional",
+      "size_bytes": 297112,
+      "size_human": "290.1 KB",
+      "files": 54,
+      "summary": "Convert Word documents from docx to simple and clean HTML and Markdown",
+      "requires": [
+        "cobble<0.2,>=0.1.3"
+      ]
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "role": "transitive",
+      "size_bytes": 289835,
+      "size_human": "283.0 KB",
+      "files": 37,
+      "summary": "A minimal low-level HTTP client.",
+      "requires": [
+        "certifi",
+        "h11>=0.16"
+      ]
+    },
+    {
+      "name": "publicsuffix2",
+      "version": "2.20191221",
+      "role": "transitive",
+      "size_bytes": 265538,
+      "size_human": "259.3 KB",
+      "files": 10,
+      "summary": "Get a public suffix for a domain name using the Public Suffix List. Forked from and using the same API as the publicsuff",
+      "requires": []
+    },
+    {
+      "name": "certifi",
+      "version": "2026.7.22",
+      "role": "transitive",
+      "size_bytes": 249281,
+      "size_human": "243.4 KB",
+      "files": 13,
+      "summary": "Python package for providing Mozilla's CA Bundle.",
+      "requires": []
+    },
+    {
+      "name": "h2",
+      "version": "4.3.0",
+      "role": "transitive",
+      "size_bytes": 242408,
+      "size_human": "236.7 KB",
+      "files": 18,
+      "summary": "Pure-Python HTTP/2 protocol implementation",
+      "requires": [
+        "hyperframe<7,>=6.1",
+        "hpack<5,>=4.1"
+      ]
+    },
+    {
+      "name": "requests",
+      "version": "2.34.2",
+      "role": "transitive",
+      "size_bytes": 235437,
+      "size_human": "229.9 KB",
+      "files": 27,
+      "summary": "Python HTTP for Humans.",
+      "requires": [
+        "charset_normalizer<4,>=2",
+        "idna<4,>=2.5",
+        "urllib3<3,>=1.26",
+        "certifi>=2023.5.7"
+      ]
+    },
+    {
+      "name": "attrs",
+      "version": "26.1.0",
+      "role": "transitive",
+      "size_bytes": 234681,
+      "size_human": "229.2 KB",
+      "files": 36,
+      "summary": "Classes Without Boilerplate",
+      "requires": []
+    },
+    {
+      "name": "pyclipper",
+      "version": "1.4.0",
+      "role": "direct_optional",
+      "size_bytes": 234022,
+      "size_human": "228.5 KB",
+      "files": 9,
+      "summary": "Cython wrapper for the C++ translation of the Angus Johnson's Clipper library (ver. 6.4.2)",
+      "requires": []
+    },
+    {
+      "name": "pydivert",
+      "version": "2.1.0",
+      "role": "transitive",
+      "size_bytes": 231612,
+      "size_human": "226.2 KB",
+      "files": 28,
+      "summary": "Python binding to windivert driver",
+      "requires": [
+        "win-inet-pton (>=1.0.1); python_version == \"2.7\" or python_version == \"3.3\"",
+        "enum34 (>=1.1.6); python_version == \"2.7\" or python_version == \"3.3\""
+      ]
+    },
+    {
+      "name": "pyOpenSSL",
+      "version": "26.2.0",
+      "role": "transitive",
+      "size_bytes": 226400,
+      "size_human": "221.1 KB",
+      "files": 14,
+      "summary": "Python wrapper module around the OpenSSL library",
+      "requires": [
+        "cryptography<49,>=46.0.0",
+        "typing-extensions>=4.9; python_version < \"3.13\" and python_version >= \"3.8\""
+      ]
+    },
+    {
+      "name": "hpack",
+      "version": "4.2.0",
+      "role": "transitive",
+      "size_bytes": 220801,
+      "size_human": "215.6 KB",
+      "files": 15,
+      "summary": "Pure-Python HPACK header encoding",
+      "requires": []
+    },
+    {
+      "name": "pycparser",
+      "version": "3.11",
+      "role": "transitive",
+      "size_bytes": 214334,
+      "size_human": "209.3 KB",
+      "files": 14,
+      "summary": "C parser in Python",
+      "requires": []
+    },
+    {
+      "name": "html2text",
+      "version": "2025.4.15",
+      "role": "direct_optional",
+      "size_bytes": 214241,
+      "size_human": "209.2 KB",
+      "files": 19,
+      "summary": "Turn HTML into equivalent Markdown-structured text.",
+      "requires": []
+    },
+    {
+      "name": "fpgen",
+      "version": "1.3.0",
+      "role": "transitive",
+      "size_bytes": 196113,
+      "size_human": "191.5 KB",
+      "files": 18,
+      "summary": "A fast & comprehensive browser fingerprint generator",
+      "requires": [
+        "click",
+        "httpx",
+        "indexed-zstd",
+        "numpy",
+        "orjson",
+        "zstandard"
+      ]
+    },
+    {
+      "name": "msgpack",
+      "version": "1.1.2",
+      "role": "transitive",
+      "size_bytes": 184292,
+      "size_human": "180.0 KB",
+      "files": 11,
+      "summary": "MessagePack serializer",
+      "requires": []
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.16.0",
+      "role": "transitive",
+      "size_bytes": 182924,
+      "size_human": "178.6 KB",
+      "files": 6,
+      "summary": "Backported and Experimental Type Hints for Python 3.9+",
+      "requires": []
+    },
+    {
+      "name": "filetype",
+      "version": "1.2.0",
+      "role": "direct_required",
+      "size_bytes": 181654,
+      "size_human": "177.4 KB",
+      "files": 26,
+      "summary": "Infer file type and MIME type of any file/buffer. No external dependencies.",
+      "requires": []
+    },
+    {
+      "name": "markdownify",
+      "version": "1.2.3",
+      "role": "direct_required",
+      "size_bytes": 157820,
+      "size_human": "154.1 KB",
+      "files": 13,
+      "summary": "Convert HTML to markdown.",
+      "requires": [
+        "beautifulsoup4<5,>=4.9",
+        "six<2,>=1.15"
+      ]
+    },
+    {
+      "name": "platformdirs",
+      "version": "4.13.0",
+      "role": "transitive",
+      "size_bytes": 153125,
+      "size_human": "149.5 KB",
+      "files": 19,
+      "summary": "A small Python package for determining appropriate platform-specific dirs, e.g. a `user data dir`.",
+      "requires": []
+    },
+    {
+      "name": "soupsieve",
+      "version": "2.9.2",
+      "role": "transitive",
+      "size_bytes": 144689,
+      "size_human": "141.3 KB",
+      "files": 13,
+      "summary": "A modern CSS selector implementation for Beautiful Soup.",
+      "requires": []
+    },
+    {
+      "name": "sortedcontainers",
+      "version": "2.4.0",
+      "role": "transitive",
+      "size_bytes": 133472,
+      "size_human": "130.3 KB",
+      "files": 10,
+      "summary": "Sorted Containers -- Sorted List, Sorted Dict, Sorted Set",
+      "requires": []
+    },
+    {
+      "name": "ansicon",
+      "version": "1.89.0",
+      "role": "transitive",
+      "size_bytes": 127380,
+      "size_human": "124.4 KB",
+      "files": 9,
+      "summary": "Python wrapper for loading Jason Hood's ANSICON",
+      "requires": []
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "role": "transitive",
+      "size_bytes": 104525,
+      "size_human": "102.1 KB",
+      "files": 18,
+      "summary": "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1",
+      "requires": []
+    },
+    {
+      "name": "ua-parser",
+      "version": "1.0.2",
+      "role": "transitive",
+      "size_bytes": 98220,
+      "size_human": "95.9 KB",
+      "files": 19,
+      "summary": "Python port of Browserscope's user agent parser",
+      "requires": [
+        "ua-parser-builtins"
+      ]
+    },
+    {
+      "name": "flatbuffers",
+      "version": "25.12.19",
+      "role": "transitive",
+      "size_bytes": 88614,
+      "size_human": "86.5 KB",
+      "files": 15,
+      "summary": "The FlatBuffers serialization format for Python",
+      "requires": []
+    },
+    {
+      "name": "wsproto",
+      "version": "1.3.2",
+      "role": "transitive",
+      "size_bytes": 82929,
+      "size_human": "81.0 KB",
+      "files": 15,
+      "summary": "Pure-Python WebSocket protocol implementation",
+      "requires": [
+        "h11<1,>=0.16.0"
+      ]
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "role": "transitive",
+      "size_bytes": 78475,
+      "size_human": "76.6 KB",
+      "files": 18,
+      "summary": "Cross-platform colored terminal text.",
+      "requires": []
+    },
+    {
+      "name": "asgiref",
+      "version": "3.11.1",
+      "role": "transitive",
+      "size_bytes": 74979,
+      "size_human": "73.2 KB",
+      "files": 17,
+      "summary": "ASGI specs, helper code, and adapters",
+      "requires": [
+        "typing_extensions>=4; python_version < \"3.11\""
+      ]
+    },
+    {
+      "name": "et_xmlfile",
+      "version": "2.0.0",
+      "role": "transitive",
+      "size_bytes": 59468,
+      "size_human": "58.1 KB",
+      "files": 11,
+      "summary": "An implementation of lxml.xmlfile for the standard library",
+      "requires": []
+    },
+    {
+      "name": "argon2-cffi-bindings",
+      "version": "26.1.0",
+      "role": "transitive",
+      "size_bytes": 53050,
+      "size_human": "51.8 KB",
+      "files": 7,
+      "summary": "Low-level CFFI bindings for Argon2",
+      "requires": [
+        "cffi>=1.0.1; python_version < \"3.14\"",
+        "cffi>=2; python_version >= \"3.14\""
+      ]
+    },
+    {
+      "name": "PySocks",
+      "version": "1.7.1",
+      "role": "transitive",
+      "size_bytes": 50504,
+      "size_human": "49.3 KB",
+      "files": 8,
+      "summary": "A Python SOCKS client module. See https://github.com/Anorov/PySocks for more information.",
+      "requires": []
+    },
+    {
+      "name": "inquirer",
+      "version": "3.4.1",
+      "role": "transitive",
+      "size_bytes": 49794,
+      "size_human": "48.6 KB",
+      "files": 23,
+      "summary": "Collection of common interactive command line user interfaces, based on Inquirer.js",
+      "requires": [
+        "blessed (>=1.19.0)",
+        "editor (>=1.6.0)",
+        "readchar (>=4.2.0)"
+      ]
+    },
+    {
+      "name": "itsdangerous",
+      "version": "2.2.0",
+      "role": "transitive",
+      "size_bytes": 47379,
+      "size_human": "46.3 KB",
+      "files": 14,
+      "summary": "Safely pass data to untrusted environments and back.",
+      "requires": []
+    },
+    {
+      "name": "hyperframe",
+      "version": "6.1.0",
+      "role": "transitive",
+      "size_bytes": 41192,
+      "size_human": "40.2 KB",
+      "files": 11,
+      "summary": "Pure-Python HTTP/2 framing",
+      "requires": []
+    },
+    {
+      "name": "pyee",
+      "version": "13.0.1",
+      "role": "transitive",
+      "size_bytes": 40202,
+      "size_human": "39.3 KB",
+      "files": 15,
+      "summary": "A rough port of Node.js's EventEmitter to Python with a few tricks of its own",
+      "requires": [
+        "typing-extensions"
+      ]
+    },
+    {
+      "name": "kaitaistruct",
+      "version": "0.11",
+      "role": "transitive",
+      "size_bytes": 39044,
+      "size_human": "38.1 KB",
+      "files": 8,
+      "summary": "Kaitai Struct declarative parser generator for binary data: runtime library for Python",
+      "requires": [
+        "enum34; python_version < \"3.4\""
+      ]
+    },
+    {
+      "name": "six",
+      "version": "1.17.0",
+      "role": "transitive",
+      "size_bytes": 38105,
+      "size_human": "37.2 KB",
+      "files": 7,
+      "summary": "Python 2 and 3 compatibility utilities",
+      "requires": []
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.4",
+      "role": "transitive",
+      "size_bytes": 35810,
+      "size_human": "35.0 KB",
+      "files": 12,
+      "summary": "Safely add untrusted strings to HTML/XML markup.",
+      "requires": []
+    },
+    {
+      "name": "argon2-cffi",
+      "version": "25.1.0",
+      "role": "transitive",
+      "size_bytes": 35166,
+      "size_human": "34.3 KB",
+      "files": 14,
+      "summary": "Argon2 for Python",
+      "requires": [
+        "argon2-cffi-bindings"
+      ]
+    },
+    {
+      "name": "screeninfo",
+      "version": "0.8.1",
+      "role": "transitive",
+      "size_bytes": 32616,
+      "size_human": "31.9 KB",
+      "files": 19,
+      "summary": "Fetch location and size of physical screens.",
+      "requires": [
+        "Cython; sys_platform == \"darwin\"",
+        "dataclasses; python_version < \"3.7\"",
+        "pyobjc-framework-Cocoa; sys_platform == \"darwin\""
+      ]
+    },
+    {
+      "name": "pyperclip",
+      "version": "1.11.0",
+      "role": "transitive",
+      "size_bytes": 31364,
+      "size_human": "30.6 KB",
+      "files": 9,
+      "summary": "A cross-platform clipboard module for Python. (Only handles plain text for now.)",
+      "requires": []
+    },
+    {
+      "name": "service-identity",
+      "version": "26.1.0",
+      "role": "transitive",
+      "size_bytes": 31242,
+      "size_human": "30.5 KB",
+      "files": 11,
+      "summary": "Service identity verification for pyOpenSSL & cryptography.",
+      "requires": [
+        "attrs>=19.1.0",
+        "cryptography>=47"
+      ]
+    },
+    {
+      "name": "colorlog",
+      "version": "6.12.0",
+      "role": "transitive",
+      "size_bytes": 29279,
+      "size_human": "28.6 KB",
+      "files": 11,
+      "summary": "Add colours to the output of Python's logging module.",
+      "requires": [
+        "colorama; sys_platform == \"win32\""
+      ]
+    },
+    {
+      "name": "blinker",
+      "version": "1.9.0",
+      "role": "transitive",
+      "size_bytes": 24729,
+      "size_human": "24.1 KB",
+      "files": 9,
+      "summary": "Fast, simple object-to-object and broadcast signaling",
+      "requires": []
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "role": "transitive",
+      "size_bytes": 23676,
+      "size_human": "23.1 KB",
+      "files": 12,
+      "summary": "Markdown URL utilities",
+      "requires": []
+    },
+    {
+      "name": "runs",
+      "version": "1.3.0",
+      "role": "transitive",
+      "size_bytes": 19403,
+      "size_human": "18.9 KB",
+      "files": 6,
+      "summary": "🏃 Run a block of text as a subprocess 🏃",
+      "requires": [
+        "xmod"
+      ]
+    },
+    {
+      "name": "readchar",
+      "version": "4.2.2",
+      "role": "transitive",
+      "size_bytes": 16602,
+      "size_human": "16.2 KB",
+      "files": 15,
+      "summary": "Library to easily read single chars and key strokes",
+      "requires": []
+    },
+    {
+      "name": "xmod",
+      "version": "1.10.0",
+      "role": "transitive",
+      "size_bytes": 9453,
+      "size_human": "9.2 KB",
+      "files": 7,
+      "summary": "🌱 Turn any object into a module 🌱",
+      "requires": []
+    },
+    {
+      "name": "cobble",
+      "version": "0.1.4",
+      "role": "transitive",
+      "size_bytes": 9040,
+      "size_human": "8.8 KB",
+      "files": 7,
+      "summary": "Create data objects",
+      "requires": []
+    },
+    {
+      "name": "editor",
+      "version": "2.0.1",
+      "role": "transitive",
+      "size_bytes": 8910,
+      "size_human": "8.7 KB",
+      "files": 7,
+      "summary": "🖋 Open the default text editor 🖋",
+      "requires": [
+        "runs",
+        "xmod"
+      ]
+    }
+  ]
+}

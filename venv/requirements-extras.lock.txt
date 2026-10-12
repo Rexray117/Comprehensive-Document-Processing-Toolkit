@@ -1,0 +1,16 @@
+# 由 scripts/pack_release.py 于 2026-09-11 按构建环境实际版本锁定
+# 源文件: requirements-extras.txt
+
+# 增强型可选依赖 —— 缺失时对应功能自动降级，不影响核心流程
+
+# DOCX → HTML 的高保真转换（缺失时降级为内置轻量 Markdown→HTML 渲染）
+mammoth==1.12.1
+
+# 繁简转换（面向繁体/简体双语交付物）
+opencc-python-reimplemented==0.1.7
+
+# XLSX 备选写出引擎（大数据量写出比 openpyxl 更快）
+XlsxWriter==3.2.9
+
+# PPTX / DOCX 渲染为 PDF 后再转 PNG 时用于 PDF 栅格化（配合 LibreOffice 使用）
+pymupdf>=1.24.0
