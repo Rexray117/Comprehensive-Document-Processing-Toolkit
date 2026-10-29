@@ -95,7 +95,7 @@ EXT_TO_KIND = {
 **第 3 步：验证**
 
 ```bash
-PY="D:/Job/job in awit/2026 10/20261012 1401 综合性文档技能/omni-office-file-toolkit-bundle/venv/Scripts/python.exe"
+PY="C:/Users/ASUS/.workbuddy/binaries/python/envs/default/Scripts/python.exe"
 "$PY" -m core.cli list                 # 应出现 markdown 模块
 "$PY" -m core.cli cap markdown         # 检查动作契约
 "$PY" -m core.cli read README.md       # 实际跑一遍

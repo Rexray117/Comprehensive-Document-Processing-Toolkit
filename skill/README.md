@@ -55,7 +55,7 @@ omni-file-toolkit/
 ## 快速开始
 
 ```bash
-PY="D:/Job/job in awit/2026 10/20261012 1401 综合性文档技能/omni-office-file-toolkit-bundle/venv/Scripts/python.exe"
+PY="C:/Users/ASUS/.workbuddy/binaries/python/envs/default/Scripts/python.exe"
 cd omni-file-toolkit
 
 "$PY" scripts/doctor.py          # ① 环境自检

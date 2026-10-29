@@ -3,6 +3,22 @@
 本文件记录「综合性办公文件处理技能」各版本的对外变更。
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循语义化版本。
 
+## [v0.2.1] — 2026-10-13
+
+### 修正
+
+- **OCR 链在 rapidocr 3.x 下静默失败**：`recognize_rapidocr` 解析 `RapidOCROutput` 时
+  对 numpy 数组使用 `x or []` / `if payload:` 真值判断，触发
+  "The truth value of an array is ambiguous"，OCR 被降级为 warning 跳过
+  （旧版 rapidocr-onnxruntime 1.x 返回 tuple 才侥幸未触发）。
+  改为 `is None` 显式判空 + `len()` 判空，1.x/2.x/3.x 三种返回结构均正确解析。
+
+### 环境
+
+- 受管运行时解释器（`binaries/python/versions/3.13.12`，即新会话默认 `python`）
+  补装全部技能依赖（requirements.txt + pypdf + rapidocr + onnxruntime）。
+  此前依赖仅存在于 `envs/default` venv，导致新会话以默认解释器调用技能时 0/19 全缺。
+
 ## [v0.2] — 2026-10-12
 
 ### 新增

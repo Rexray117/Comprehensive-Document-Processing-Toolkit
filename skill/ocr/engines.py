@@ -282,16 +282,21 @@ def recognize_rapidocr(img, langs_list: list[str]) -> OCRResult:
     payload = raw
     if isinstance(raw, tuple):  # 1.x: (result, elapse)
         payload = raw[0]
-    if hasattr(raw, "boxes") and hasattr(raw, "txts"):  # 2.x RapidOCROutput
-        boxes = getattr(raw, "boxes", None) or []
-        txts = getattr(raw, "txts", None) or []
-        scores = getattr(raw, "scores", None) or []
+    if hasattr(raw, "boxes") and hasattr(raw, "txts"):  # 2.x/3.x RapidOCROutput
+        # 注意：3.x 的 boxes/txts/scores 是 numpy 数组，不能用 `x or []`（布尔歧义），
+        # 也不能用 `if payload:` 之类的真值判断 —— 必须 is None 显式判空。
+        boxes = getattr(raw, "boxes", None)
+        txts = getattr(raw, "txts", None)
+        scores = getattr(raw, "scores", None)
+        boxes = [] if boxes is None else list(boxes)
+        txts = [] if txts is None else list(txts)
+        scores = [] if scores is None else list(scores)
         for i, text in enumerate(txts):
             box = boxes[i] if i < len(boxes) else []
             score = float(scores[i]) if i < len(scores) else 0.0
             blocks.append(OCRBlock(text=str(text), confidence=score,
                                    box=[[float(p[0]), float(p[1])] for p in box]))
-    elif payload:
+    elif payload is not None and len(payload) != 0:  # 1.x: list[(box, text, score)]
         for item in payload:
             try:
                 box, text, score = item[0], item[1], item[2]

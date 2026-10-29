@@ -1,9 +1,9 @@
 {
   "name": "综合性办公文件处理技能",
   "slug": "omni-office-file-toolkit",
-  "version": "0.2.0",
-  "release": "v0.2",
-  "release_date": "2026-10-12",
+  "version": "0.2.1",
+  "release": "v0.2.1",
+  "release_date": "2026-10-13",
   "skill_standard": "agent-skills",
   "license": "Apache-2.0",
   "summary": "统一处理 PPTX、DOCX、XLSX、HTML、PDF、TXT 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改",
@@ -12,7 +12,7 @@
   "entrypoints": {
     "skill_md": "SKILL.md",
     "mcp_server": {
-      "command": "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe",
+      "command": "C:\\Users\\ASUS\\.workbuddy\\binaries\\python\\envs\\default\\Scripts\\python.exe",
       "args": [
         "bridges/mcp_server.py"
       ],
@@ -29,7 +29,7 @@
       "note": "command 必须是安装了依赖的 Python 绝对路径；换机器部署时需替换。"
     },
     "stdio_bridge": {
-      "command": "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe",
+      "command": "C:\\Users\\ASUS\\.workbuddy\\binaries\\python\\envs\\default\\Scripts\\python.exe",
       "args": [
         "bridges/stdio_bridge.py"
       ],
@@ -42,7 +42,7 @@
       "batch": "run_batch"
     },
     "cli": {
-      "command": "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe",
+      "command": "C:\\Users\\ASUS\\.workbuddy\\binaries\\python\\envs\\default\\Scripts\\python.exe",
       "args": [
         "-m",
         "core.cli"
@@ -293,8 +293,8 @@
       "pymupdf>=1.24.0"
     ],
     "install": [
-      "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe -m pip install -r requirements.txt",
-      "D:\\Job\\job in awit\\2026 10\\20261012 1401 综合性文档技能\\omni-office-file-toolkit-bundle\\venv\\Scripts\\python.exe -m pip install -r requirements-ocr.txt   # 可选：OCR"
+      "C:\\Users\\ASUS\\.workbuddy\\binaries\\python\\envs\\default\\Scripts\\python.exe -m pip install -r requirements.txt",
+      "C:\\Users\\ASUS\\.workbuddy\\binaries\\python\\envs\\default\\Scripts\\python.exe -m pip install -r requirements-ocr.txt   # 可选：OCR"
     ]
   },
   "mcp_resources": [
