@@ -12,7 +12,7 @@ description: >-
   「提取表格」「转 Markdown」「读 PDF」「读文本文件」「文档体检」时使用。
   不用于：从零创作排版精良的交付级文档（用 tencent-docx / tencent-pptx / tencent-docs-sheet-generation），
   也不用于图片美颜/去水印/抠像（用 buddy-image-processing）。
-version: 0.2.0
+version: 0.2.2
 license: Apache-2.0
 agent_created: true
 ---
