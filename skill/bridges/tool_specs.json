@@ -2,12 +2,12 @@
   "package": {
     "name": "综合性办公文件处理技能",
     "slug": "omni-office-file-toolkit",
-    "version": "0.1.0",
-    "release": "v0.1",
-    "release_date": "2026-09-11",
+    "version": "0.2.2",
+    "release": "v0.2.2",
+    "release_date": "2026-10-30",
     "skill_standard": "agent-skills",
     "min_python": "3.9",
-    "summary": "统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改"
+    "summary": "统一处理 PPTX、DOCX、XLSX、HTML、PDF、TXT 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改"
   },
   "summary": {
     "generic_count": 4,
@@ -67,7 +67,7 @@
   "generic": [
     {
       "name": "file_dispatch",
-      "description": "综合性办公文件处理技能：统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改。五类文件（.pptx .docx .xlsx .html .png/.jpg 等）统一走同一套动作语义，module 传 auto 时按文件真实类型自动路由。动作含义：probe=极速探测结构；read=结构化读取内容；analyze=内容识别与质量诊断（图片可开 OCR）；transform=转换导出新文件（Markdown/CSV/JSON/单文件 HTML 等）；edit=修改文件，默认就地保存并自动生成 _bak 备份。返回统一信封 {ok, module, action, warnings, artifacts, data, error}。",
+      "description": "综合性办公文件处理技能：统一处理 PPTX、DOCX、XLSX、HTML、PDF、TXT 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改。五类文件（.pptx .docx .xlsx .html .png/.jpg 等）统一走同一套动作语义，module 传 auto 时按文件真实类型自动路由。动作含义：probe=极速探测结构；read=结构化读取内容；analyze=内容识别与质量诊断（图片可开 OCR）；transform=转换导出新文件（Markdown/CSV/JSON/单文件 HTML 等）；edit=修改文件，默认就地保存并自动生成 _bak 备份。返回统一信封 {ok, module, action, warnings, artifacts, data, error}。",
       "inputSchema": {
         "type": "object",
         "properties": {

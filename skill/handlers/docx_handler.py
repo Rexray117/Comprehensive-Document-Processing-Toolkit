@@ -170,6 +170,7 @@ class DocxHandler(BaseHandler):
     )
     extensions = (".docx", ".dotx")
     kinds = ("docx",)
+    required_deps = {"docx": "python-docx"}  # docx 模块全部动作的基础
     optional_deps = {"mammoth": "mammoth", "lxml": "lxml"}
 
     # ======================================================== probe
@@ -425,7 +426,9 @@ class DocxHandler(BaseHandler):
         tags=("transform",),
     )
     def transform(self, ctx: ActionContext) -> dict[str, Any]:
-        op = (ctx.text("op", "to_markdown") or "to_markdown").strip().lower()
+        # target 是"想要什么产物"的自然叫法（docx/pdf/xlsx 三处习惯不一致），
+        # 未给 op 时按同义键兜底，避免 options.target="pdf" 被静默忽略后仍返回 ok=true。
+        op = (ctx.text("op") or ctx.text("target") or "to_markdown").strip().lower()
         stem = slugify(ctx.input_path().stem)
 
         if op in ("to_markdown", "markdown", "md"):

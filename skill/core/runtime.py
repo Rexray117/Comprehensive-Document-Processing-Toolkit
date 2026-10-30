@@ -28,6 +28,7 @@ DEPENDENCIES: list[tuple[str, str, str, bool]] = [
     ("lxml", "lxml", "HTML/XML 高速解析器", True),
     ("markdownify", "markdownify", "HTML → Markdown", True),
     ("html2text", "html2text", "HTML → Markdown（备选）", False),
+    ("pypdf", "pypdf", "PDF 解析（pdf 模块 probe/read/auto 的唯一实现）", True),
     ("filetype", "filetype", "魔数嗅探", True),
     ("charset_normalizer", "charset-normalizer", "编码自动探测", True),
     # --- 可选：OCR 链路（任选其一即可启用图像文本识别） ---
@@ -120,12 +121,15 @@ def doctor(*, verbose: bool = False) -> dict[str, Any]:
         "project_root": str(PROJECT_ROOT),
         "cwd": os.getcwd(),
         "healthy": not missing_required,
-        "dependencies": deps if verbose else {
+        "dependencies": {
             "required_missing": [d["package"] for d in missing_required],
             "optional_missing": [d["package"] for d in missing_optional],
             "installed_count": sum(1 for d in deps if d["installed"]),
             "total_count": len(deps),
         },
+        # 明细恒可用：doctor.py --verbose / core.cli doctor -v 都读这里，
+        # 不再随 verbose 切换 dependencies 的类型（曾导致 TypeError: list indices...）
+        "dependency_details": deps,
         "external_tools": tools if verbose else [t for t in tools if t["available"]],
         "ocr_backends": backends,
         "modules": [

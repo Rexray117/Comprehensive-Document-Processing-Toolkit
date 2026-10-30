@@ -19,13 +19,13 @@ NAME = "综合性办公文件处理技能"
 SLUG = "omni-office-file-toolkit"
 
 #: 语义化版本
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 
 #: 对外发布标签
-RELEASE = "v0.2.1"
+RELEASE = "v0.2.2"
 
 #: 发布日期
-RELEASE_DATE = "2026-10-12"
+RELEASE_DATE = "2026-10-30"
 
 #: 遵循的技能标准
 SKILL_STANDARD = "agent-skills"

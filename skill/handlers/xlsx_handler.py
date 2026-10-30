@@ -63,7 +63,8 @@ class XlsxHandler(BaseHandler):
     )
     extensions = (".xlsx", ".xlsm", ".xltx")
     kinds = ("xlsx",)
-    optional_deps = {"pandas": "pandas", "xlsxwriter": "XlsxWriter"}
+    required_deps = {"pandas": "pandas"}  # 描述统计/聚合依赖 pandas，缺了这些动作不可用
+    optional_deps = {"xlsxwriter": "XlsxWriter"}
 
     # ======================================================== probe
     @action(

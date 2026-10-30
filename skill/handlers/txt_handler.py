@@ -32,6 +32,7 @@ from core.base import ActionContext, BaseHandler, action  # noqa: E402
 from core.version import VERSION  # noqa: E402
 from core.errors import ParamError  # noqa: E402
 from core.utils import (  # noqa: E402
+    decode_warning,
     read_text_smart,
     slugify,
     text_stats,
@@ -41,6 +42,15 @@ from core.utils import (  # noqa: E402
 MODULE = "txt"
 
 _CRLF = "\r\n"
+
+
+def _decode(ctx: ActionContext, path: Any, *, max_bytes: Optional[int] = None) -> tuple[str, str]:
+    """读取文本并登记解码质量警告（U+FFFD 不再静默丢失）。"""
+    text, encoding = read_text_smart(path, max_bytes=max_bytes)
+    warning = decode_warning(text, encoding)
+    if warning:
+        ctx.warn(warning)
+    return text, encoding
 
 
 def _line_ending_info(text: str) -> dict[str, Any]:
@@ -90,7 +100,7 @@ class TxtHandler(BaseHandler):
     def probe(self, ctx: ActionContext) -> dict[str, Any]:
         path = ctx.input_path()
         raw = path.read_bytes()
-        text, encoding = read_text_smart(path, max_bytes=2_000_000)
+        text, encoding = _decode(ctx, path, max_bytes=2_000_000)
         endings = _line_ending_info(text)
         lines = text.splitlines()
         non_empty = [ln for ln in lines if ln.strip()]
@@ -125,7 +135,7 @@ class TxtHandler(BaseHandler):
         tags=("read",),
     )
     def read(self, ctx: ActionContext) -> dict[str, Any]:
-        text, encoding = read_text_smart(ctx.input_path())
+        text, encoding = _decode(ctx, ctx.input_path())
         lines = text.splitlines()
         offset = max(0, ctx.integer("offset", 0) or 0)
         limit = ctx.bounded_int("limit", 500, low=1, high=100_000)
@@ -156,7 +166,7 @@ class TxtHandler(BaseHandler):
         tags=("read", "analyze"),
     )
     def analyze(self, ctx: ActionContext) -> dict[str, Any]:
-        text, encoding = read_text_smart(ctx.input_path())
+        text, encoding = _decode(ctx, ctx.input_path())
         top_n = ctx.bounded_int("top_n", 20, low=1, high=200)
         dup_min = ctx.bounded_int("duplicate_min", 4, low=0, high=1000)
         lines = text.splitlines()
@@ -217,7 +227,7 @@ class TxtHandler(BaseHandler):
         op = (ctx.text("op", "to_json") or "to_json").strip().lower()
         path = ctx.input_path()
         stem = slugify(path.stem)
-        text, encoding = read_text_smart(path)
+        text, encoding = _decode(ctx, path)
         out_encoding = ctx.text("encoding", "utf-8")
 
         if op in ("to_json", "json"):
@@ -285,7 +295,7 @@ class TxtHandler(BaseHandler):
     )
     def edit(self, ctx: ActionContext) -> dict[str, Any]:
         path = ctx.input_path()
-        text, encoding = read_text_smart(path)
+        text, encoding = _decode(ctx, path)
         op = (ctx.text("op", "replace") or "replace").strip().lower()
 
         if op == "replace":

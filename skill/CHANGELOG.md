@@ -3,6 +3,47 @@
 本文件记录「综合性办公文件处理技能」各版本的对外变更。
 格式遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/)，版本号遵循语义化版本。
 
+## [v0.2.2] — 2026-10-30
+
+### 新增
+
+- **`vendor/` 内置依赖**：随仓分发 6 个纯 Python 包（pypdf、beautifulsoup4、soupsieve、
+  markdownify、filetype、charset-normalizer），`core/vendor_boot.py` 在导入 `core` 时
+  **追加**到 `sys.path` 末尾——本机真实安装优先，装不上才用内置副本，`OMNI_NO_VENDOR=1`
+  可禁用。效果：只有 Python 的机器上 `pdf` / `html` / 编码探测开箱可用，
+  `scripts/doctor.py` 在系统 Python 3.14 上从「缺 5 个必需依赖」降到「只缺 4 个原生包」。
+- **模块硬依赖与可选依赖分离**：`BaseHandler.required_deps`（新增）+ `optional_deps`，
+  `capabilities()` 暴露 `missing_required_deps`，`core.cli list` 打印
+  `✗ 硬依赖缺失: ...`。此前 `html` 把 bs4 标成"可选依赖"，而 5 个 html 动作全缺它不可用。
+
+### 修正
+
+- **`run_batch` 递归扫到自己的产物**：`core.utils.iter_files()` 会走进上一次
+  `transform` 生成的 `<名字>_out/` 目录，把产物当新输入（表现为 `UNSUPPORTED_FORMAT`
+  噪音与产物套娃）。现在跳过 `_out` / `*_out` / `_smoke` / `__pycache__` / `.git` 等目录。
+- **`scripts/smoke_test.py` 默认往技能目录里写**：只读安装（全局技能目录）下必炸，
+  且 `--keep` 语义颠倒（不加 `--keep` 也打印"已保留"却从不清理）。现在默认用系统临时
+  目录、不加 `--keep` 时自动清理，`--keep` 才保留。
+- **[P0] PDF 模块整体不可用却仍报「依赖齐备」**：`pypdf` 是 `pdf` 模块 `probe/read/auto`
+  的唯一解析器，但它既不在 `requirements.txt` 里、也不在 `core/runtime.py:20` 的
+  `DEPENDENCIES` 探针表里，而 `doctor()` 的健康判定只认那张表 —— 结果是任意合法 PDF
+  都返回 `DEPENDENCY_MISSING`，`scripts/doctor.py` 却打印「核心依赖齐备」。
+  现在 `requirements.txt` / `requirements.lock.txt` 声明 `pypdf`，探针表新增
+  `("pypdf", "pypdf", ..., True)`，缺失即 `healthy=False`。
+- **`doctor --verbose` 必崩**：`dependencies` 在 verbose 下是 list、否则是 dict，
+  而 `scripts/doctor.py` 两种假设各对一半，任何一次 `--verbose` 都抛
+  `TypeError: list indices must be integers or slices, not str`。
+  现在 `dependencies` 恒为汇总 dict，明细固定走新字段 `dependency_details`。
+- **cp936 控制台 UnicodeEncodeError**：缺依赖时打印 `✗` 会崩在 `print`，
+  恰好只在「最需要看到报告」的场景触发。`scripts/doctor.py` 启动即把
+  stdout/stderr 切到 UTF-8 + `errors="replace"`。
+- **文本编码静默损坏**：GBK 文件被 `utf-8(replace)` 解成 `����` 后仍报
+  `ok=true / warnings=[]`。新增 `core.utils.decode_warning()`，`txt` 模块的
+  probe/read/analyze/transform/edit 五处读取统一登记 U+FFFD 警告。
+- **`options.target` 被静默忽略**：`pptx` / `docx` 的 `transform` 只读 `op`，
+  `target:"pdf"` 返回 `ok=true` 却产出 `.md`。现在 `op` 缺省时回退到 `target`
+  （`ctx.text("op") or ctx.text("target")`）。
+
 ## [v0.2.1] — 2026-10-13
 
 ### 修正

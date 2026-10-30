@@ -23,7 +23,22 @@ if str(_ROOT) not in sys.path:
 from core.runtime import doctor  # noqa: E402
 
 
+def _safe_stdout() -> None:
+    """cp936 控制台遇到 ✓✗○● 会抛 UnicodeEncodeError（只在缺依赖时触发）。
+
+    统一把 stdout/stderr 切到 UTF-8 并把不可编码字符降级为 ?，既不崩也不丢信息。
+    """
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            try:
+                reconfigure(encoding="utf-8", errors="replace")
+            except (ValueError, OSError):
+                pass
+
+
 def main(argv: list[str] | None = None) -> int:
+    _safe_stdout()
     parser = argparse.ArgumentParser(description="omni-file-toolkit 环境自检")
     parser.add_argument("-v", "--verbose", action="store_true", help="输出完整明细")
     parser.add_argument("--json", action="store_true", help="以 JSON 输出")
@@ -90,7 +105,7 @@ def main(argv: list[str] | None = None) -> int:
         print("-" * 68)
         print("依赖明细")
         print("-" * 68)
-        for dep in report["dependencies"]:
+        for dep in report.get("dependency_details") or []:
             mark = "✓" if dep["installed"] else ("✗" if dep["required"] else "○")
             version = dep["version"] or "-"
             print(f"  {mark} {dep['package']:<34} {version:<12} {dep['purpose']}")

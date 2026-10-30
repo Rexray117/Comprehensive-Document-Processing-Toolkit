@@ -133,6 +133,8 @@ def list_modules() -> list[dict[str, Any]]:
                 "kinds": list(handler.kinds),
                 "actions": handler.action_names(),
                 "optional_deps": dict(handler.optional_deps),
+                "required_deps": dict(handler.required_deps),
+                "missing_required_deps": handler.missing_required_deps(),
             }
         )
     return out

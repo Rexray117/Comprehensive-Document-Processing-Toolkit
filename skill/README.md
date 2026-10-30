@@ -5,6 +5,16 @@
 
 各模块既可整体调度，也可独立运行；框架零耦合，新增文件类型无需改动任何框架代码。
 
+## 零安装可用（vendor/）
+
+`vendor/` 随仓库分发 6 个纯 Python 依赖（pypdf、beautifulsoup4、soupsieve、markdownify、
+filetype、charset-normalizer），导入 `core` 时会**追加**到 `sys.path` 末尾——
+本机已 pip 安装的真实包优先，装不上才用内置副本。因此在一台只有 Python 的机器上，
+`pdf` / `html` / 文本编码探测三类能力开箱可用；其余模块（pptx/docx/xlsx/image）
+仍需要 `pip install -r requirements.txt`（这些包带原生扩展或体积较大，不适合内置）。
+
+禁用内置副本：`OMNI_NO_VENDOR=1`。
+
 ## 目录结构
 
 ```
@@ -12,6 +22,7 @@ omni-file-toolkit/
 ├── SKILL.md                  ← Agent 入口（渐进式披露第一层）
 ├── README.md                 ← 本文件
 ├── requirements.txt          ← 核心依赖（纯 pip 可装）
+├── vendor/                   ← 内置的纯 Python 依赖副本（无需 pip 也能跑 HTML/PDF/编码探测）
 ├── requirements-ocr.txt      ← OCR 可选依赖（图像文字识别）
 ├── requirements-extras.txt   ← 增强可选依赖（缺失自动降级）
 ├── install.py                ← 安装到技能目录（复制 / 联接 / 建虚拟环境）

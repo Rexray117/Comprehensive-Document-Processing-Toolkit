@@ -56,7 +56,7 @@
 
 ## 模块 `docx` —— DOCX 文档
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.docx, .dotx  
 **可选依赖**：`mammoth` → mammoth, `lxml` → lxml  
 
@@ -122,9 +122,8 @@ ZIP 层快速探测：段落/表格/图片/公式/批注的数量与文档体量
 
 ## 模块 `html` —— HTML 网页
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.html, .htm, .xhtml  
-**可选依赖**：`bs4` → beautifulsoup4, `lxml` → lxml, `markdownify` → markdownify  
 
 处理 .html 网页：提取正文/标题层级/链接/图片/表格/结构化数据，做 SEO 与无障碍审查，转 Markdown/纯文本，把外链资源内联为单文件自包含 HTML，并支持选择器级增删改。
 
@@ -188,9 +187,9 @@ _无参数。_
 
 ## 模块 `image` —— 图片（PNG/JPG 等）
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.png, .jpg, .jpeg, .gif, .bmp, .webp, .tif, .tiff  
-**可选依赖**：`PIL` → Pillow, `rapidocr_onnxruntime` → rapidocr-onnxruntime  
+**可选依赖**：`rapidocr_onnxruntime` → rapidocr-onnxruntime  
 
 处理位图图片：读取元数据与 EXIF、OCR 识别图中文字、评估清晰度与配色、启发式判别图片类型并生成多模态视觉分析载荷，支持转换/压缩/裁剪/加水印/打码。
 
@@ -264,9 +263,8 @@ _无参数。_
 
 ## 模块 `pdf` —— PDF 文档
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.pdf  
-**可选依赖**：`pypdf` → pypdf  
 
 读取 .pdf：元数据与加密探测、按页文本提取（支持页码区间）、书签大纲、关键词与空页诊断，导出文本/Markdown/JSON、按页拆分。只读模块，不做写编辑。
 
@@ -310,9 +308,9 @@ _无参数。_
 
 ## 模块 `pptx` —— PPTX 演示文稿
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.pptx, .ppsx, .potx  
-**可选依赖**：`pptx` → python-pptx, `fitz` → pymupdf  
+**可选依赖**：`fitz` → pymupdf  
 
 处理 .pptx 演示文稿：读取幻灯片文本/表格/图表/备注/图片、统计大纲与关键词、导出 Markdown 或图片、跨 run 查找替换保格式、增删与复制幻灯片。
 
@@ -380,7 +378,7 @@ ZIP 层快速探测：页数、媒体、备注、尺寸，不依赖 python-pptx
 
 ## 模块 `txt` —— 纯文本文件
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.txt  
 
 处理 .txt 纯文本：编码智能探测、行尾诊断、统计与关键词分析，转 JSON/JSONL/Markdown，支持就地查找替换、行过滤与格式清理（零第三方依赖）。
@@ -442,9 +440,9 @@ ZIP 层快速探测：页数、媒体、备注、尺寸，不依赖 python-pptx
 
 ## 模块 `xlsx` —— XLSX 工作表
 
-**版本**：0.1.0  
+**版本**：0.2.2  
 **支持类型**：.xlsx, .xlsm, .xltx  
-**可选依赖**：`pandas` → pandas, `xlsxwriter` → XlsxWriter  
+**可选依赖**：`xlsxwriter` → XlsxWriter  
 
 处理 .xlsx 工作簿：读取值/公式/合并单元格/数字格式，做描述统计与分组聚合，导出 CSV/JSON/Markdown/HTML，写入单元格与公式、追加行、设置格式、插入图表。
 

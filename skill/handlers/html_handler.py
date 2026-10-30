@@ -90,7 +90,9 @@ class HtmlHandler(BaseHandler):
     )
     extensions = (".html", ".htm", ".xhtml")
     kinds = ("html", "htm")
-    optional_deps = {"bs4": "beautifulsoup4", "lxml": "lxml", "markdownify": "markdownify"}
+    # bs4 / lxml / markdownify 在全部 5 个动作里都是硬依赖（内联在 vendor/ 随包分发），
+    # 此前写成 optional_deps 会让 `cli list` 展示"可选依赖"，与实际可用性相反。
+    required_deps = {"bs4": "beautifulsoup4", "lxml": "lxml", "markdownify": "markdownify"}
 
     # ======================================================== probe
     @action(

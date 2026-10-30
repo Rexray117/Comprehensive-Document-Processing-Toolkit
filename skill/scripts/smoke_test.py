@@ -19,6 +19,7 @@ import argparse
 import json
 import shutil
 import sys
+import tempfile
 import time
 import traceback
 from dataclasses import dataclass, field
@@ -32,7 +33,9 @@ if str(_ROOT) not in sys.path:
 from core.dispatcher import Request, run_request  # noqa: E402
 from core.registry import list_modules  # noqa: E402
 
-WORKDIR = _ROOT / "_smoke"
+#: 默认工作目录放到系统临时目录：只读安装（如全局 skill 目录）下也不再尝试写技能根
+#: 之前默认写 skill/_smoke，只读挂载/无权限时必炸，且并非用户期望的产物位置
+WORKDIR = Path(tempfile.gettempdir()) / "omni-skill-smoke"
 
 
 # ---------------------------------------------------------------------------
@@ -421,7 +424,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--ocr", action="store_true", help="包含 OCR 相关用例")
     parser.add_argument("--keep", action="store_true", help="保留样例与产物目录")
     parser.add_argument("--json", action="store_true", help="输出 JSON 报告")
-    parser.add_argument("--workdir", default=str(WORKDIR), help="工作目录（默认 ./_smoke）")
+    parser.add_argument(
+        "--workdir",
+        default=str(WORKDIR),
+        help="工作目录（默认系统临时目录下的 omni-skill-smoke）",
+    )
     args = parser.parse_args(argv)
 
     workdir = Path(args.workdir).resolve()
@@ -457,8 +464,11 @@ def main(argv: list[str] | None = None) -> int:
     else:
         print_report(rows)
 
-    if not args.keep:
-        print(f"（样例已保留在 {workdir}，可用 --keep 明确保留 / 手动删除）")
+    if args.keep:
+        print(f"（样例已按 --keep 保留在 {workdir}）")
+    else:
+        shutil.rmtree(workdir, ignore_errors=True)
+        print(f"（临时样例已清理：{workdir}）")
     return 0 if all(r["status"] != "FAIL" for r in rows) else 1
 
 

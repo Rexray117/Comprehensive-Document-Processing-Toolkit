@@ -19,11 +19,12 @@ agent_created: true
 
 # 综合性办公文件处理技能
 
-> **显示名**：综合性办公文件处理技能 ｜ **标识符**：`omni-office-file-toolkit` ｜ **版本**：v0.2
+> **显示名**：综合性办公文件处理技能 ｜ **标识符**：`omni-office-file-toolkit` ｜ **版本**：v0.2.2
 >
 > 前置说明：Agent Skills 标准要求 `name` 字段为 ASCII 小写连字符形式（用于跨平台标识与工具命名），
 > 因此这里用 `omni-office-file-toolkit`；中文名「综合性办公文件处理技能」用于展示。
-> 安装目录名与发行包名均为中文。
+> 安装目录名与发行包名同样使用 ASCII（`omni-office-file-toolkit/`）：DSH 按目录名发现技能，
+> 目录名与 `name` 不一致会导致 `doctor`/`verify` 之类的自检误判「未安装」。
 
 一个插件式的文件处理整合包：**7 个处理模块 + 4 条集成路径**，既能整体调度，也能单模块独立运行。
 
@@ -81,7 +82,7 @@ agent_created: true
 ### 最快上手（路径 A）
 
 ```bash
-# ① 装依赖（用你打算给 harness 用的那个解释器）
+# ① 装依赖（可选！核心依赖已随包内置于 vendor/，见下方「自带依赖」）
 python -m pip install -r requirements.txt
 
 # ② 自检：缺什么、怎么装，一目了然
@@ -93,6 +94,32 @@ python bridges/mcp_server.py --print-config
 # ④ 协议自检（13 项断言，含真实文件处理）
 python bridges/mcp_server.py --selftest
 ```
+
+### 自带依赖（vendor/）：不装 pip 包也能跑
+
+仓库内置了 6 个**纯 Python、跨平台、无编译产物**的依赖副本，位于 `vendor/`：
+
+| 包 | 覆盖的能力 | 许可证 |
+| --- | --- | --- |
+| `pypdf` | `pdf` 模块全部动作（probe / read / analyze / transform） | BSD-3-Clause |
+| `beautifulsoup4` + `soupsieve` | `html` 模块的 DOM 解析 | MIT |
+| `markdownify` | HTML → Markdown | MIT |
+| `filetype` | 魔数嗅探（真实文件类型判定） | MIT |
+| `charset-normalizer` | 文本编码自动探测（GBK/Big5 等） | MIT |
+
+工作机制见 `core/vendor_boot.py`：导入 `core` 包时把 `vendor/` **追加**到 `sys.path` 末尾，
+因此「机器上已 pip 安装的真实包优先，装不上时才用内置副本」。设置环境变量
+`OMNI_NO_VENDOR=1` 可以完全禁用内置副本，用来排查到底是哪个包在起作用。
+
+`requirements.txt` 里的其余依赖（python-pptx / python-docx / openpyxl / pandas / numpy /
+Pillow / lxml）**必须**用 pip 安装——它们是带原生扩展或体积较大的包，不适合随包分发。
+
+每个模块的能力自描述里有两组依赖字段，含义不同，别混：
+
+- `required_deps`：缺了**整个模块的动作都会失败**（如 `pdf` 缺 `pypdf`）
+- `optional_deps`：缺了只是**降级**（如 `image` 缺 `rapidocr` 则 OCR 跳过）
+
+`python -m core.cli list` 会在硬依赖缺失时直接打印 `✗ 硬依赖缺失: ...`。
 
 ### 路径 B / C / D 速览
 
@@ -124,7 +151,7 @@ MCP 默认暴露 **4 个工具**（`file_dispatch` / `file_capabilities` / `file
 | 模块 | 扩展名 | 亮点能力 |
 | --- | --- | --- |
 | `pptx` | `.pptx` `.ppsx` `.potx` | 备注页/表格/图表/图片读取；大纲与字体配色统计；**跨 run 查找替换保格式**；复制/增删/移动幻灯片；导出内嵌图片；LibreOffice 渲染 PDF/PNG |
-| `docx` | `.docx` `.dotx` | **按正文真实顺序**遍历段落与表格（不错位）；**导出/插入真 OMML 公式**（可编辑，非图片）；页眉页脚替换；追加 Markdown；清理空段 |
+| `docx` | `.docx` `.dotx` | **按正文真实顺序**遍历段落与表格（不错位）；**导出/插入真 OMML 公式**（可编辑，非图片；导出用 `transform op=extract_omml`，插入用 `edit op=insert_formula` 且 `formula` 必须是 `<m:oMath>` 片段而非 LaTeX）；页眉页脚替换；追加 Markdown；清理空段 |
 | `xlsx` | `.xlsx` `.xlsm` `.xltx` | 值与公式双读（含缓存缺失显式告警）；描述统计/相关性/分组聚合/离群点；透视表；**写公式、设格式、冻结窗格、插图表** |
 | `html` | `.html` `.htm` `.xhtml` | 正文/标题/链接/表格/JSON-LD 提取；**SEO 与无障碍审查**；**一键内联 CSS/JS/图片成单文件自包含 HTML**；选择器级增删改 |
 | `pdf` | `.pdf` | 页数/元数据/加密状态探测；**按页文本提取（页码区间）**；书签大纲；空页/纯图扫描件识别；导出文本/Markdown/JSON；按页拆分（只读模块，不做写编辑） |
@@ -149,8 +176,9 @@ python -m core.cli list                # 列出全部模块与动作
 1. **元数据层** — `probe` + `options.exif=true`：格式、尺寸、DPI、EXIF（含 GPS，会提示隐私风险）
 2. **统计层** — `read`：清晰度（Laplacian 方差）、亮度、对比度、噪声、主色板
 3. **文字层** — `analyze` + `options.ocr=true`：OCR 文本 + 行级版面还原 + 置信度过滤
-4. **语义层** — `analyze` + `options.vision_payload=true`：返回
-   `{mime, data_uri, prompt, local_signals_to_include}`，把它交给**你自己的多模态能力**
+4. **语义层** — `analyze` + `options.vision_payload=true`：载荷在
+   **`data.vision_bridge`** 里（不是 `data.vision_payload`，那个键名只是开关），
+   结构为 `{mime, data_uri, prompt, local_signals_to_include}`；把它交给**你自己的多模态能力**
    即可得到「图里画了什么」的语义描述。
 
 **为什么语义层做成桥接而不在本地跑 VLM**：本地 VLM 需要数 GB 权重与 GPU，与本技能

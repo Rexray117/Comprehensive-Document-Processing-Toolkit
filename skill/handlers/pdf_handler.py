@@ -110,7 +110,7 @@ class PdfHandler(BaseHandler):
     )
     extensions = (".pdf",)
     kinds = ("pdf",)
-    optional_deps = _PDF_DEP
+    required_deps = _PDF_DEP  # pypdf 缺失时 pdf 模块四个动作全部不可用
 
     # ======================================================== probe
     @action(

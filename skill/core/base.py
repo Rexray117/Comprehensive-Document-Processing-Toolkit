@@ -266,8 +266,11 @@ class BaseHandler(metaclass=HandlerMeta):
     kinds: tuple[str, ...] = ()
     #: 版本
     version: str = _PKG_VERSION
-    #: 该模块声明的可选依赖：``{import 名: pip 包名}``
+    #: 该模块声明的可选依赖：``{import 名: pip 包名}``（缺了只是降级）
     optional_deps: dict[str, str] = {}
+    #: 该模块的硬依赖：``{import 名: pip 包名}``，缺了整块动作不可用。
+    #: 与 optional_deps 分开，避免 `cli list` 把"缺了就废"的包标成"可选"。
+    required_deps: dict[str, str] = {}
     #: 动作执行时默认合并的选项
     default_options: dict[str, Any] = {}
 
@@ -300,8 +303,20 @@ class BaseHandler(metaclass=HandlerMeta):
             "extensions": list(self.extensions),
             "kinds": list(self.kinds),
             "optional_deps": dict(self.optional_deps),
+            "required_deps": dict(self.required_deps),
+            "missing_required_deps": self.missing_required_deps(),
             "actions": [spec.to_dict() for spec in self._actions.values()],
         }
+
+    def missing_required_deps(self) -> list[str]:
+        """返回当前解释器下缺失的硬依赖 pip 包名（用于自描述与门禁提示）。"""
+        missing: list[str] = []
+        for module_name, pip_name in self.required_deps.items():
+            try:
+                __import__(module_name)
+            except Exception:  # noqa: BLE001 - 任何导入异常都算缺失
+                missing.append(pip_name)
+        return missing
 
     def action_names(self) -> list[str]:
         return list(self._actions)

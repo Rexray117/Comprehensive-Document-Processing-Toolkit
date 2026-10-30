@@ -1,0 +1,11 @@
+# 运行时产物（自检/示例生成，不应入库）
+_smoke/
+__pycache__/
+*.py[cod]
+*.egg-info/
+_out/
+*.log
+
+# 用户本地产物
+_user_meta.json
+.previews/

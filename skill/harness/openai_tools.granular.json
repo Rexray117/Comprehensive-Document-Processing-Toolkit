@@ -2,12 +2,12 @@
   "package": {
     "name": "综合性办公文件处理技能",
     "slug": "omni-office-file-toolkit",
-    "version": "0.1.0",
-    "release": "v0.1",
-    "release_date": "2026-09-11",
+    "version": "0.2.2",
+    "release": "v0.2.2",
+    "release_date": "2026-10-30",
     "skill_standard": "agent-skills",
     "min_python": "3.9",
-    "summary": "统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改"
+    "summary": "统一处理 PPTX、DOCX、XLSX、HTML、PDF、TXT 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改"
   },
   "tools": [
     {

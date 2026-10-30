@@ -168,6 +168,9 @@ def main(argv: Optional[list[str]] = None) -> int:
             print(f"  ● {m['module']:<7} {m['display_name']}  v{m['version']}")
             print(f"    类型: {', '.join(m['extensions'])}")
             print(f"    动作: {', '.join(m['actions'])}")
+            missing = m.get("missing_required_deps") or []
+            if missing:
+                print(f"    ✗ 硬依赖缺失: {', '.join(missing)}  ← 该模块动作会失败，先 pip install")
             if m.get("optional_deps"):
                 print(f"    可选依赖: {', '.join(m['optional_deps'].values())}")
             print()

@@ -247,6 +247,16 @@ def sniff(path: str | os.PathLike[str]) -> dict[str, Any]:
     }
 
 
+def _is_own_output(path: Path) -> bool:
+    """判断文件是否位于本技能的输出/缓存目录内。"""
+    skip_names = {"_out", "_smoke", "__pycache__", ".git", "node_modules", "_preview"}
+    for part in path.parts[:-1]:
+        lowered = part.lower()
+        if lowered in skip_names or lowered.endswith("_out"):
+            return True
+    return False
+
+
 def iter_files(
     root: str | os.PathLike[str],
     *,
@@ -262,6 +272,11 @@ def iter_files(
     out: list[Path] = []
     for child in sorted(base.glob(pattern)):
         if not child.is_file():
+            continue
+        # 跳过本技能自己产出的目录（<stem>_out/）与运行时垃圾目录：
+        # 批量跑「目录 → 转换」时，第二轮递归会把上一轮的产物当成新输入，
+        # 表现为 UNSUPPORTED_FORMAT 噪音与产物套娃。
+        if _is_own_output(child):
             continue
         if allowed is None:
             out.append(child)
@@ -307,6 +322,21 @@ def read_text_smart(path: str | os.PathLike[str], *, max_bytes: Optional[int] = 
             if guess.get("encoding") and guess.get("confidence", 0) > 0.6:
                 return raw.decode(guess["encoding"], errors="replace"), guess["encoding"]
     return raw.decode("utf-8", errors="replace"), "utf-8(replace)"
+
+
+def decode_warning(text: str, encoding: str) -> str | None:
+    """解码质量提示：``errors="replace"`` 会静默插入 U+FFFD，此处把它显式暴露出来。
+
+    返回警告文案；文本干净时返回 ``None``。调用方应把结果交给 ``ctx.warn()``，
+    避免「读出来的中文变成 �」却报告 ``ok=True / warnings=[]`` 的静默数据损坏。
+    """
+    bad = text.count("\ufffd")
+    if bad == 0:
+        return None
+    return (
+        f"文本解码存在 {bad} 处损坏字符（U+FFFD）：按 {encoding} 解码失败后以 replace 兜底，"
+        "内容可能与原文件不一致。请用 encoding=gb18030/utf-8 显式重读，并核对关键数据。"
+    )
 
 
 _WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9_'\-]*")

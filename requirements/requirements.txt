@@ -14,5 +14,6 @@ beautifulsoup4>=4.12.3    # HTML 解析
 lxml>=5.2.0               # 高速 XML/HTML 解析器（BeautifulSoup 后端）
 markdownify>=0.13.1       # HTML → Markdown
 html2text>=2024.2.26      # HTML → Markdown（备选实现）
+pypdf>=5.0                 # PDF 解析（pdf 模块 probe/read/auto 的唯一实现）
 filetype>=1.2.0           # 基于魔数的文件类型嗅探
 charset-normalizer>=3.3.2  # 文本编码自动探测

@@ -425,7 +425,8 @@ class ImageHandler(BaseHandler):
     )
     extensions = (".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".tif", ".tiff")
     kinds = ("png", "jpg", "jpeg", "gif", "bmp", "webp", "tiff")
-    optional_deps = {"PIL": "Pillow", "rapidocr_onnxruntime": "rapidocr-onnxruntime"}
+    required_deps = {"PIL": "Pillow"}  # 无 Pillow 则 image 模块全废
+    optional_deps = {"rapidocr_onnxruntime": "rapidocr-onnxruntime"}
 
     # ======================================================== probe
     @action(

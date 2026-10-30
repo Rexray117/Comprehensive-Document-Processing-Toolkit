@@ -1,8 +1,8 @@
 {
   "name": "综合性办公文件处理技能",
   "slug": "omni-office-file-toolkit",
-  "version": "0.2.1",
-  "release": "v0.2.1",
+  "version": "0.2.2",
+  "release": "v0.2.2",
   "release_date": "2026-10-13",
   "skill_standard": "agent-skills",
   "license": "Apache-2.0",

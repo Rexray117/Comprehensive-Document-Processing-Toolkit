@@ -1,6 +1,6 @@
 # 工具索引
 
-> 由 `scripts/gen_tool_specs.py` 自动生成 —— 综合性办公文件处理技能 v0.1
+> 由 `scripts/gen_tool_specs.py` 自动生成 —— 综合性办公文件处理技能 v0.2.2
 > 契约来源：各 handler 的 `@action(...)` 声明，与运行时 `python -m core.cli cap <module>` 一致。
 
 ## 模式一：通用工具（默认，推荐）
@@ -9,7 +9,7 @@
 
 | 工具名 | 说明 | 必填参数 |
 | --- | --- | --- |
-| `file_dispatch` | 综合性办公文件处理技能：统一处理 PPTX、DOCX、XLSX、HTML 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改。 | `action`, `input` |
+| `file_dispatch` | 综合性办公文件处理技能：统一处理 PPTX、DOCX、XLSX、HTML、PDF、TXT 与图片（含 OCR 图像内容识别）的读取、分析、转换与修改。 | `action`, `input` |
 | `file_capabilities` | 查询本技能支持的模块与动作契约（含每个动作的全部参数说明）。 | — |
 | `file_doctor` | 环境自检：Python 版本、依赖是否齐备（缺失时直接给出 pip 安装命令）、OCR 后端是否可用、可用模块列表。 | — |
 | `file_batch` | 对目录批量执行同一动作，例如「把 ./docs 下所有 pptx 和 docx 都体检一遍」。 | `action`, `target` |
